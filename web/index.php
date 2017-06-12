@@ -24,34 +24,33 @@ switch ($action)
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
-
+		
 		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
 		error_log($stock[$vino] . ' botellas en stock');
 		
+		#Consultar Stock
 		if ($stock[$vino] < $nbotellas) 
 		{
 			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
-			$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion,)));
-			$source = 'bodegastorres.php';
 		} 
 		else
 		{
-			#return 
-			#{
-				#'contextOut': [{'name':'nuevopedido', 'lifespan':5, 'parameters':{'vino': vino, 'nBotellas':nbotellas, 'direccion':direccion}}],
-				#'source': 'BodegaTorres',
-				#'followupEvent':{'name':'consultarDireccion','data':{'nBotellas':nbotellas, 'vino':vino, 'direccion': direccion}}
-			#}
+			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>nbotellas, 'vino'=>vino, 'direccion'=>direccion));
 		}
-        break;
+		$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion,)));
+        $source = 'bodegastorres.php';
+		break;
     case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
         break;
 }
 
+#Devolver JSON
 $output['contextOut'] = $contextout;
 $output['speech'] = $outputtext;
 $output['displayText'] = $outputtext;
 $output['source'] = $source;
+$output['followupEvent'] = $followupEvent;
+
 ob_end_clean();
 ?>
