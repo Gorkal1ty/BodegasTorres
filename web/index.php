@@ -22,8 +22,8 @@ switch ($action)
 {
     case 'nuevo.consultarStock':
 		#Parametros
-		$vino = parameters['get']['vino'];
-		$nbotellas = parameters['get']['nbotellas'];
+		$vino = $parameters['vino'];
+		$nbotellas = $parameters['nbotellas'];
 
 		echo 'Petición: ' . $nbotellas . ' de ' . $vino;
 		echo $stock[vino] . ' botellas en stock';
