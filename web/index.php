@@ -51,7 +51,8 @@ $output['speech'] = $outputtext;
 $output['displayText'] = $outputtext;
 $output['contextOut'] = $contextout;
 $output['source'] = $source;
-#$output['followupEvent'] = $followupEvent;
-
+$output['followupEvent'] = $followupEvent;
+echo json_encode($output);
 ob_end_clean();
+echo json_encode($output);
 ?>
