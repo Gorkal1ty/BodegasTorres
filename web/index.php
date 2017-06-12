@@ -16,7 +16,7 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
-echo $parameters;
+print $parameters;
 
 switch ($action) 
 {
@@ -25,8 +25,8 @@ switch ($action)
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
 
-		echo 'Petición: ' . $nbotellas . ' de ' . $vino;
-		echo $stock[vino] . ' botellas en stock';
+		print 'Petición: ' . $nbotellas . ' de ' . $vino;
+		print $stock[vino] . ' botellas en stock';
 		
 		if ($stock[vino] < $nbotellas) 
 		{
@@ -45,7 +45,7 @@ switch ($action)
 		}
         break;
     case 'nuevo.confirmarDireccion':
-        echo 'Confirmar Direccion';
+        print 'Confirmar Direccion';
         break;
 }
 
