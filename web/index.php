@@ -7,7 +7,7 @@ $vino = "Ninguno";
 $nBotellas = 0;
 
 #Parametros Ficticios (BD)
-$province_list = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
+$stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = "C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid";
 
 #Obtener Info. Peticion
@@ -23,13 +23,13 @@ switch ($action)
 		$vino = parameters["vino"];
 		$nbotellas = parameters["nbotellas"];
 
-		echo "Petición: " . nbotellas . " de " . vino;
-		echo str(stock[vino]) . " botellas en stock";
+		echo "Petición: " . $nbotellas . " de " . $vino;
+		echo $stock[vino] . " botellas en stock";
 		
-		if (stock[vino] < int(nbotellas)) 
+		if ($stock[vino] < $nbotellas) 
 		{
-			$outputtext = "Lo sentimos pero solamente nos quedan " . str(stock[vino]) . " existencias de " . vino . ", ¿Las quiere?";
-			$contextout = array(array("name"=>"nuevopedido", lifespan=>5, "parameters"=>array("vino"=>$vino, "nBotellas"=>$nbotellas, "direccion"=>$direccion,)));
+			$outputtext = "Lo sentimos pero solamente nos quedan " . $stock[vino] . " existencias de " . $vino . ", ¿Las quiere?";
+			$contextout = array(array("name"=>"nuevopedido", "lifespan"=>5, "parameters"=>array("vino"=>$vino, "nBotellas"=>$nbotellas, "direccion"=>$direccion,)));
 			$source = "bodegastorres.php";
 		} 
 		else
