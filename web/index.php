@@ -31,7 +31,6 @@ switch ($action)
 		#Consultar Stock
 		if ($stock[$vino]<$nbotellas) 
 		{
-			error_log('HOLA');
 			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
 		} 
 		else
@@ -51,7 +50,7 @@ $output['contextOut'] = $contextout;
 $output['speech'] = $outputtext;
 $output['displayText'] = $outputtext;
 $output['source'] = $source;
-$output['followupEvent'] = $followupEvent;
+#$output['followupEvent'] = $followupEvent;
 
 ob_end_clean();
 ?>
