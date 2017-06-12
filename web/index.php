@@ -16,7 +16,7 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
-print $parameters;
+error_log($parameters);
 
 switch ($action) 
 {
@@ -25,8 +25,8 @@ switch ($action)
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
 
-		print 'Petición: ' . $nbotellas . ' de ' . $vino;
-		print $stock[vino] . ' botellas en stock';
+		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
+		error_log($stock[vino] . ' botellas en stock');
 		
 		if ($stock[vino] < $nbotellas) 
 		{
@@ -45,7 +45,7 @@ switch ($action)
 		}
         break;
     case 'nuevo.confirmarDireccion':
-        print 'Confirmar Direccion';
+        error_log('Confirmar Direccion');
         break;
 }
 
@@ -54,5 +54,5 @@ $output['speech'] = $outputtext;
 $output['displayText'] = $outputtext;
 $output['source'] = $source;
 ob_end_clean();
-echo json_encode($output);
+error_log(json_encode($output));
 ?>
