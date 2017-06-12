@@ -31,20 +31,26 @@ switch ($action)
 		#Consultar Stock
 		if ($stock[$vino] < $nbotellas) 
 		{
-			$output['speech'] = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
-			$output['displayText'] = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
+			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
 		} 
 		else
 		{
-			$output['followupEvent'] = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
+			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
 		}
-		$output['contextOut'] = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion,)));
-        $output['source'] = 'bodegastorres.php';
+		$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion,)));
+        $source = 'bodegastorres.php';
 		break;
     case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
         break;
 }
+
+#Devolver JSON
+$output['contextOut'] = $contextout;
+$output['speech'] = $outputtext;
+$output['displayText'] = $outputtext;
+$output['source'] = $source;
+$output['followupEvent'] = $followupEvent;
 
 ob_end_clean();
 ?>
