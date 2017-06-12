@@ -26,11 +26,11 @@ switch ($action)
 		$nbotellas = $parameters['nbotellas'];
 
 		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
-		error_log($stock[vino] . ' botellas en stock');
+		error_log($stock[$vino] . ' botellas en stock');
 		
-		if ($stock[vino] < $nbotellas) 
+		if ($stock[$vino] < $nbotellas) 
 		{
-			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
+			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
 			$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion,)));
 			$source = 'bodegastorres.php';
 		} 
@@ -54,5 +54,4 @@ $output['speech'] = $outputtext;
 $output['displayText'] = $outputtext;
 $output['source'] = $source;
 ob_end_clean();
-error_log(json_encode($output));
 ?>
