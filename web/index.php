@@ -51,7 +51,7 @@ $output['speech'] = $outputtext;
 $output['displayText'] = $outputtext;
 $output['contextOut'] = $contextout;
 $output['source'] = $source;
-$output['followupEvent'] = $followupEvent;
+#$output['followupEvent'] = $followupEvent;
 
 ob_end_clean();
 ?>
