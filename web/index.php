@@ -37,10 +37,11 @@ switch ($action)
 		{
 			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
 		}
-		$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion,)));
+		$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
         $source = 'bodegastorres.php';
 		break;
-    case 'nuevo.confirmarDireccion':
+    
+	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
         break;
 }
