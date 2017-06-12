@@ -29,8 +29,9 @@ switch ($action)
 		error_log($stock[$vino] . ' botellas en stock');
 		
 		#Consultar Stock
-		if ($stock[$vino] < $nbotellas) 
+		if ($stock[$vino]<$nbotellas) 
 		{
+			error_log('HOLA');
 			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
 		} 
 		else
