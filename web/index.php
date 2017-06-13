@@ -25,9 +25,6 @@ class Pedido
     }
 }
 
-#Coleccion Global
-$pedidos[] = array();
-
 #Obtener Info. Peticion
 $json = file_get_contents('php://input'); 
 $request = json_decode($json, true);
@@ -36,17 +33,16 @@ $parameters = $request['result']['parameters'];
 
 switch ($action) 
 {
+	#Parametros
+	$vinos = array($parameters['vino']);
+	$nbotellas = array($parameters['nbotellas']);
+	#Recorrer Vinos > #Generar Pedido (key > vino)
+	for ($i = 0; $i <= count($vinos); $i++) 
+	{
+		$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
+	}
 	#------------------------------- Consultar Stock --------------------------
     case 'nuevo.consultarStock':
-		#Parametros
-		$vinos = array($parameters['vino']);
-		$nbotellas = array($parameters['nbotellas']);
-		#Recorrer Vinos > #Generar Pedido (key > vino)
-		for ($i = 0; $i <= count($vinos); $i++) 
-		{
-			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
-		}
-		#Comprobar Stock
 		$stockTodos = 'OK';
 		foreach ($pedidos as &$Pedido)
 		{
