@@ -22,7 +22,7 @@ switch ($action)
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
 			#Generar Pedido (key > vino)
-			$pedidos[$vinos[0][$i]] = $nbotellas[0][$i];
+			$pedidos[$vinos[0][$i]],$nbotellas[0][$i];
 		}
 		foreach ($pedidos as $pedido)
 		{
