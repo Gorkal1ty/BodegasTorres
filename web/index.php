@@ -38,35 +38,28 @@ switch ($action)
 		$vinos = array($parameters['vino']);
 		$nbotellas = array($parameters['nbotellas']);
 		#Recorrer Vinos
-		for ($i = 0; $i <= count($vinos); $i++) 
-		{
+		for ($i = 0; $i <= count($vinos); $i++) {
 			#Generar Pedido (key > vino)
 			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
 		}
-		foreach ($pedidos as &$Pedido)
-		{
+		foreach ($pedidos as &$Pedido){
 			#Mostrar Pedidos
 			error_log("PEDIDO = " . $Pedido->vino . " -> " . $Pedido->unidades);
 			#Comprobar Stock
-			$stockTodos = "OK"
-			if ($stock[$Pedido->vino]>=$Pedido->unidades)
-			{
+			$stockTodos = "OK";
+			if ($stock[$Pedido->vino] >= $Pedido->unidades){
 				#Existe Stock
 				$Pedido->stock = 'OK';
 			} 
-			else
-			{
+			else{
 				$stockTodos = "";
 			}
 		}
-		if($stockTodos == 'OK')
-		{
+		if($stockTodos == 'OK'){
 			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
 		}
-		else
-		{
-			foreach ($pedidos as &$Pedido)
-			{
+		else{
+			foreach ($pedidos as &$Pedido){
 				#Localizar pedido sin Stock y consultar
 				
 			}
