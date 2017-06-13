@@ -2,28 +2,13 @@
 header('Content-Type: application/json');
 ob_start();
 
+#Parametros Globales
+$vino = 'Ninguno';
+$nBotellas = 0;
+
 #Parametros Ficticios (BD)
 $stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
-
-#Clase Pedido
-class Pedido
-{
-	public $vino;
-	public $unidades;
-	public $stock;		#OK en caso bueno
-	#public $coste;
-	#public $estado;
-	
-	public function __construct($v, $u, $s) #$c, $e
-	{
-        $this->vino = $v;
-		$this->unidades = $u;
-		$this->stock = $s;
-		#$this->coste = $c;
-		#$this->estado = $e;
-    }
-}
 
 #Obtener Info. Peticion
 $json = file_get_contents('php://input'); 
@@ -31,71 +16,31 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
+error_log($parameters);
+
 switch ($action) 
 {
-	#------------------------------- Consultar Stock --------------------------
     case 'nuevo.consultarStock':
 		#Parametros
-		$vinos = array($parameters['vino']);
-		$nbotellas = array($parameters['nbotellas']);
-		#Recorrer Vinos > #Generar Pedido (key > vino)
-		for ($i = 0; $i <= count($vinos); $i++) 
+		$vino = $parameters['vino'];
+		$nbotellas = $parameters['nbotellas'];
+		
+		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
+		error_log($stock[$vino] . ' botellas en stock');
+		
+		#Consultar Stock
+		if ($stock[$vino]<$nbotellas) 
 		{
-			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
-		}
-		$stockTodos = 'OK';
-		foreach ($pedidos as &$Pedido)
-		{
-			error_log('PEDIDO = ' . $Pedido->vino . ' -> ' . $Pedido->unidades);
-			if ($stock[$Pedido->vino] >= $Pedido->unidades)
-			{
-				#Existe Stock
-				$Pedido->stock = 'OK';
-			} 
-			else
-			{
-				$stockTodos = '';
-			}
-		}
-		if($stockTodos == 'OK')
-		{
-			#TODOS STOCK OK -> Consultar Direccion
-			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
-			$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
-		}
+			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
+		} 
 		else
 		{
-			foreach ($pedidos as &$Pedido)
-			{
-				#Localizar pedido sin Stock y consultar
-				if ($Pedido->stock != 'OK')
-				{
-					$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$Pedido->vino] . ' botellas de ' . $Pedido->vino . '. Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($Pedido->unidades - $stock[$Pedido->vino]) . ' unidades o sustituirlo por completo con ' . $Pedido->unidades . ' botellas.';
-					$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
-				}
-			}
-		}		
+			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
+		}
+		$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
         $source = 'bodegastorres.php';
 		break;
-    #------------------------------- Confirmar Direccion --------------------------
-	case 'nuevo.completarPedido':
-		#Parametros
-		$vinos = array($parameters['#consultarAlternativa.vino']);
-		$nbotellas = array($parameters['#consultarAlternativa.nbotellas']);
-		#Recorrer Vinos > #Generar Pedido (key > vino)
-		for ($i = 0; $i <= count($vinos); $i++) 
-		{
-			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
-		}
-		error_log('PEDIDO COMPLETADO');
-		$outputtext = '¡Perfecto! Le adjunto un resumen del pedido: ...';
-		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
-		foreach ($pedidos as &$Pedido)
-		{
-			$outputtext = $outputtext . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . ' X €';
-		}
-		#$outputtext = $outputtext . '             Total = X €';
-		break;
+    
 	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
         break;
