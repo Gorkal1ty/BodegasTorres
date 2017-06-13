@@ -40,8 +40,8 @@ switch ($action)
 		{
 			#Generar Pedido (key > vino)
 			$pedidos[$vinos[0][$i]] = $nbotellas[0][$i];
-			$pedidos[] = new $Pedido($vinos[0][$i], $nbotellas[0][$i]);
-			}
+			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i]);
+		}
 		foreach ($pedidos as &$Pedido)
 		{
 			#Mostrar Pedidos
