@@ -21,12 +21,14 @@ switch ($action)
 		#Recorrer Vinos
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
-			$vino = $vinos[0][$i];
-			$unidades = $nbotellas[0][$i];
 			#Generar Pedido (key > vino)
 			$pedidos[$vinos[0][$i]] = $nbotellas[0][$i];
 		}
-		error_log('Pedido Celeste: ' . $pedidos['Celeste']);
+		for ($i = 0; $i <= count($pedidos); $i++) 
+		{
+			#Mostrar Pedidos
+			error_log($pedidos[$i][0] . " = " . $pedidos[$i][1]);
+		}
 		#$vino = $parameters['vino'][0];
 		#$nbotellas = $parameters['nbotellas'][0];
 		
