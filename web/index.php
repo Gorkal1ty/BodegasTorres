@@ -44,11 +44,11 @@ switch ($action)
 	    error_log('ACCION = Completar Pedido');
 		#Parametros
 		$vino = $parameters['vino'];
-		$nbotellas = (int) $stock[$vino];
-		$completar = (int) $parameters['nbotellas'] - $stock[$vino];
+		$nbotellas = $stock[$vino];
+		$completar = $parameters['nbotellas'] - $stock[$vino];
 		
 		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. ¿Es ésta su dirección? = ' . $direccion;
-		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>1, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
+		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
 
         break;
 	case 'nuevo.confirmarDireccion':
