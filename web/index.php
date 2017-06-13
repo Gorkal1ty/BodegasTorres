@@ -2,10 +2,6 @@
 header('Content-Type: application/json');
 ob_start();
 
-#Parametros Globales
-$vino = 'Ninguno';
-$nBotellas = 0;
-
 #Parametros Ficticios (BD)
 $stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
@@ -31,7 +27,8 @@ switch ($action)
 		#Consultar Stock
 		if ($stock[$vino]<$nbotellas) 
 		{
-			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
+			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($nbotellas - $stock[$vino]) . ' unidades o sustituirlo por completo con ' . $nbotellas . ' botellas.';
+			$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));;
 		} 
 		else
 		{
@@ -40,7 +37,11 @@ switch ($action)
 		$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
         $source = 'bodegastorres.php';
 		break;
-    
+    case 'nuevo.completarPedido':
+		
+	
+        error_log('Completar Pedido');
+        break;
 	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
         break;
