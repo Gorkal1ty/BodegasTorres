@@ -22,7 +22,7 @@ switch ($action)
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
 			$vino = $vinos[0][$i];
-			$unidades = $nbotellas[0][$i]
+			$unidades = $nbotellas[0][$i];
 			error_log('Vino ' . $i . ' = ' . $vino);
 			error_log('Unidades ' . $i . ' = ' . $unidades);
 		}
