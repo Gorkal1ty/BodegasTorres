@@ -92,9 +92,9 @@ switch ($action)
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		foreach ($pedidos as &$Pedido)
 		{
-			$outputtext = $outputtext . '\n' . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
+			$outputtext = $outputtext . '\x' . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
 		}
-		$outputtext = $outputtext . '\nTotal = X €';
+		$outputtext = $outputtext . '\xTotal = X €';
 		break;
 	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
