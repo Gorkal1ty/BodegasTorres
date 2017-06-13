@@ -22,12 +22,12 @@ switch ($action)
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
 			#Generar Pedido (key > vino)
-			$pedidos[$vinos[0][$i]],$nbotellas[0][$i];
+			$pedidos[$vinos[0][$i]] = $nbotellas[0][$i];
 		}
-		foreach ($pedidos as $pedido)
+		foreach ($pedidos as &$pedido)
 		{
 			#Mostrar Pedidos
-			error_log($pedido[0] . " = " . $pedido[1]);
+			error_log("PEDIDO = " . $pedido[0] . " -> " . $pedido[1]);
 		}
 		#$vino = $parameters['vino'][0];
 		#$nbotellas = $parameters['nbotellas'][0];
