@@ -26,7 +26,7 @@ class Pedido
 }
 
 #Coleccion Global
-$pedidos = array();
+$pedidos[] = array();
 
 #Obtener Info. Peticion
 $json = file_get_contents('php://input'); 
@@ -44,11 +44,11 @@ switch ($action)
 		#Recorrer Vinos > #Generar Pedido (key > vino)
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
-			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
+			$this->pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
 		}
 		#Comprobar Stock
 		$stockTodos = 'OK';
-		foreach ($pedidos as &$Pedido)
+		foreach ($this->pedidos as &$Pedido)
 		{
 			error_log('PEDIDO = ' . $Pedido->vino . ' -> ' . $Pedido->unidades);
 			if ($stock[$Pedido->vino] >= $Pedido->unidades)
@@ -69,7 +69,7 @@ switch ($action)
 		}
 		else
 		{
-			foreach ($pedidos as &$Pedido)
+			foreach ($this->pedidos as &$Pedido)
 			{
 				#Localizar pedido sin Stock y consultar
 				if ($Pedido->stock != 'OK')
@@ -86,7 +86,7 @@ switch ($action)
 		error_log('PEDIDO COMPLETADO');
 		$outputtext = '¡Perfecto! Le adjunto un resumen del pedido: ...';
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
-		foreach ($pedidos as &$Pedido)
+		foreach ($this->pedidos as &$Pedido)
 		{
 			$outputtext = $outputtext . '\n' . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
 		}
