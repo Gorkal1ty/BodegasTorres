@@ -18,8 +18,9 @@ switch ($action)
 		#Parametros
 		$vinos = array($parameters['vino']);
 		#Bucle Parámetros 
-		foreach ($vinos as $vino) {
-			error_log('Petición: ' . $vino);
+		for ($i = 0; $i < count($vinos); $i++) 
+		{
+			error_log('Posicion ' . $i . ' = ' . $vinos[$i]);
 		}
 		#$vino = $parameters['vino'][0];
 		#$nbotellas = $parameters['nbotellas'][0];
