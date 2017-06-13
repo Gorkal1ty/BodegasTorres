@@ -38,17 +38,19 @@ switch ($action)
 {
 	#------------------------------- Consultar Stock --------------------------
     case 'nuevo.consultarStock':
+		#Variable Global
+		global $pedidos;
 		#Parametros
 		$vinos = array($parameters['vino']);
 		$nbotellas = array($parameters['nbotellas']);
 		#Recorrer Vinos > #Generar Pedido (key > vino)
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
-			$this->pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
+			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
 		}
 		#Comprobar Stock
 		$stockTodos = 'OK';
-		foreach ($this->pedidos as &$Pedido)
+		foreach ($pedidos as &$Pedido)
 		{
 			error_log('PEDIDO = ' . $Pedido->vino . ' -> ' . $Pedido->unidades);
 			if ($stock[$Pedido->vino] >= $Pedido->unidades)
@@ -69,7 +71,7 @@ switch ($action)
 		}
 		else
 		{
-			foreach ($this->pedidos as &$Pedido)
+			foreach ($pedidos as &$Pedido)
 			{
 				#Localizar pedido sin Stock y consultar
 				if ($Pedido->stock != 'OK')
@@ -83,10 +85,12 @@ switch ($action)
 		break;
     #------------------------------- Confirmar Direccion --------------------------
 	case 'nuevo.completarPedido':
+		#Variable Global
+		global $pedidos;
 		error_log('PEDIDO COMPLETADO');
 		$outputtext = '¡Perfecto! Le adjunto un resumen del pedido: ...';
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
-		foreach ($this->pedidos as &$Pedido)
+		foreach ($pedidos as &$Pedido)
 		{
 			$outputtext = $outputtext . '\n' . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
 		}
