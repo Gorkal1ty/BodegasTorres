@@ -17,10 +17,14 @@ switch ($action)
     case 'nuevo.consultarStock':
 		#Parametros
 		$vinos = array($parameters['vino']);
+		$nbotellas = array($parameters['nbotellas']);
 		#Bucle Parámetros 
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
-			error_log('Posicion ' . $i . ' = ' . $vinos[0][$i]);
+			$vino = $vinos[0][$i];
+			$unidades = $nbotellas[0][$i]
+			error_log('Vino ' . $i . ' = ' . $vino);
+			error_log('Unidades ' . $i . ' = ' . $unidades);
 		}
 		#$vino = $parameters['vino'][0];
 		#$nbotellas = $parameters['nbotellas'][0];
