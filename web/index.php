@@ -47,7 +47,7 @@ switch ($action)
 		$stockTodos = 'OK';
 		foreach ($pedidos as &$Pedido)
 		{
-			error_log("PEDIDO = " . $Pedido->vino . " -> " . $Pedido->unidades);
+			error_log('PEDIDO = ' . $Pedido->vino . ' -> ' . $Pedido->unidades);
 			if ($stock[$Pedido->vino] >= $Pedido->unidades)
 			{
 				#Existe Stock
@@ -55,7 +55,7 @@ switch ($action)
 			} 
 			else
 			{
-				$stockTodos = "";
+				$stockTodos = '';
 			}
 		}
 		if($stockTodos == 'OK')
@@ -72,12 +72,23 @@ switch ($action)
 				if ($Pedido->stock != 'OK')
 				{
 					$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$Pedido->vino] . ' botellas de ' . $Pedido->vino . '. Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($Pedido->unidades - $stock[$Pedido->vino]) . ' unidades o sustituirlo por completo con ' . $Pedido->unidades . ' botellas.';
+					$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 				}
 			}
 		}		
         $source = 'bodegastorres.php';
 		break;
     #------------------------------- Confirmar Direccion --------------------------
+	case 'nuevo.completarPedido':
+		error_log('PEDIDO COMPLETADO = ' . $Pedido->vino . ' -> ' . $Pedido->unidades);
+		$outputtext = '¡Perfecto! Le adjunto un resumen del pedido: ...';
+		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+		foreach ($pedidos as &$Pedido)
+		{
+			$outputtext = $outputtext . '\n' . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' XXX €';
+		}
+		$outputtext = $outputtext . '\nTotal = XXX €';
+		break;
 	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
         break;
