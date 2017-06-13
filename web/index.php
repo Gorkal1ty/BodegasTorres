@@ -22,8 +22,8 @@ switch ($action)
 {
     case 'nuevo.consultarStock':
 		#Parametros
-		$vino = $parameters['vino'];
-		$nbotellas = $parameters['nbotellas'];
+		$vino = $parameters['vino'][0];
+		$nbotellas = $parameters['nbotellas'][0];
 		
 		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
 		error_log($stock[$vino] . ' botellas en stock');
