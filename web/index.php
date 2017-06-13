@@ -86,13 +86,13 @@ switch ($action)
     #------------------------------- Confirmar Direccion --------------------------
 	case 'nuevo.completarPedido':
 		#Variable Global
-		global $pedidos;
+		#global $pedidos;
 		error_log('PEDIDO COMPLETADO');
 		$outputtext = "¡Perfecto! Le adjunto un resumen del pedido: ...";
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		foreach ($pedidos as &$Pedido)
 		{
-			#$outputtext = $outputtext . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
+			$outputtext = $outputtext . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
 		}
 		#$outputtext = $outputtext . '             Total = X €';
 		break;
