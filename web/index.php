@@ -38,8 +38,6 @@ switch ($action)
 {
 	#------------------------------- Consultar Stock --------------------------
     case 'nuevo.consultarStock':
-		#Variable Global
-		global $pedidos;
 		#Parametros
 		$vinos = array($parameters['vino']);
 		$nbotellas = array($parameters['nbotellas']);
@@ -85,8 +83,6 @@ switch ($action)
 		break;
     #------------------------------- Confirmar Direccion --------------------------
 	case 'nuevo.completarPedido':
-		#Variable Global
-		global $pedidos;
 		error_log('PEDIDO COMPLETADO');
 		$outputtext = '¡Perfecto! Le adjunto un resumen del pedido: ...';
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
