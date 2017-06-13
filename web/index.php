@@ -92,7 +92,7 @@ switch ($action)
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		foreach ($pedidos as &$Pedido)
 		{
-			$outputtext = $outputtext . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
+			$outputtext = $outputtext . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . ' X €';
 		}
 		#$outputtext = $outputtext . '             Total = X €';
 		break;
