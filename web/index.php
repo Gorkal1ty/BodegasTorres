@@ -18,7 +18,7 @@ switch ($action)
 		#Parametros
 		$vinos = array($parameters['vino']);
 		#Bucle Parámetros 
-		for ($i = 0; $i < count($vinos); $i++) 
+		for ($i = 0; $i <= count($vinos); $i++) 
 		{
 			error_log('Posicion ' . $i . ' = ' . $vinos[$i][0]);
 		}
