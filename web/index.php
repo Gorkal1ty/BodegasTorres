@@ -38,8 +38,13 @@ switch ($action)
         $source = 'bodegastorres.php';
 		break;
     case 'nuevo.completarPedido':
+		#Parametros
+		$vino = $parameters['vino'];
+		$nbotellas = $parameters['nbotellas'];
+		$completar = $nbotellas - $stock[$vino];
 		
-	
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. ¿Está de acuerdo?';
+		
         error_log('Completar Pedido');
         break;
 	case 'nuevo.confirmarDireccion':
