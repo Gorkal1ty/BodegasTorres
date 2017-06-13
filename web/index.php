@@ -31,16 +31,17 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
+#Parametros
+$vinos = array($parameters['vino']);
+$nbotellas = array($parameters['nbotellas']);
+#Recorrer Vinos > #Generar Pedido (key > vino)
+for ($i = 0; $i <= count($vinos); $i++) 
+{
+	$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
+}
+
 switch ($action) 
 {
-	#Parametros
-	$vinos = array($parameters['vino']);
-	$nbotellas = array($parameters['nbotellas']);
-	#Recorrer Vinos > #Generar Pedido (key > vino)
-	for ($i = 0; $i <= count($vinos); $i++) 
-	{
-		$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
-	}
 	#------------------------------- Consultar Stock --------------------------
     case 'nuevo.consultarStock':
 		$stockTodos = 'OK';
