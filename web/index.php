@@ -18,19 +18,20 @@ switch ($action)
 		#Parametros
 		$vinos = array($parameters['vino']);
 		$nbotellas = array($parameters['nbotellas']);
-		#Bucle Parámetros 
+		#Recorrer Vinos
 		for ($i = 0; $i <= count($vinos); $i++) 
 		{
 			$vino = $vinos[0][$i];
 			$unidades = $nbotellas[0][$i];
-			error_log('Vino ' . $i . ' = ' . $vino);
-			error_log('Unidades ' . $i . ' = ' . $unidades);
+			#Generar Pedido (key > vino)
+			$pedidos[$vinos[0][$i]] = $nbotellas[0][$i];
 		}
+		error_log('Pedido Celeste: ' . $pedidos['Celeste']);
 		#$vino = $parameters['vino'][0];
 		#$nbotellas = $parameters['nbotellas'][0];
 		
-		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
-		error_log($stock[$vino] . ' botellas en stock');
+		#error_log('Petición: ' . $nbotellas . ' de ' . $vino);
+		#error_log($stock[$vino] . ' botellas en stock');
 		
 		#Consultar Stock
 		if ($stock[$vino]<$nbotellas) 
