@@ -16,14 +16,17 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
-error_log($parameters);
-
 switch ($action) 
 {
     case 'nuevo.consultarStock':
 		#Parametros
-		$vino = $parameters['vino'][0];
-		$nbotellas = $parameters['nbotellas'][0];
+		$vinos = array($parameters['vino']);
+		#Bucle Parámetros 
+		foreach ($vino as $vinos) {
+			error_log('Petición: ' . $vino);
+		}
+		#$vino = $parameters['vino'][0];
+		#$nbotellas = $parameters['nbotellas'][0];
 		
 		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
 		error_log($stock[$vino] . ' botellas en stock');
