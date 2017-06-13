@@ -31,19 +31,18 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
-#Parametros
-$vinos = array($parameters['vino']);
-$nbotellas = array($parameters['nbotellas']);
-#Recorrer Vinos > #Generar Pedido (key > vino)
-for ($i = 0; $i <= count($vinos); $i++) 
-{
-	$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
-}
-
 switch ($action) 
 {
 	#------------------------------- Consultar Stock --------------------------
     case 'nuevo.consultarStock':
+		#Parametros
+		$vinos = array($parameters['vino']);
+		$nbotellas = array($parameters['nbotellas']);
+		#Recorrer Vinos > #Generar Pedido (key > vino)
+		for ($i = 0; $i <= count($vinos); $i++) 
+		{
+			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
+		}
 		$stockTodos = 'OK';
 		foreach ($pedidos as &$Pedido)
 		{
@@ -80,6 +79,14 @@ switch ($action)
 		break;
     #------------------------------- Confirmar Direccion --------------------------
 	case 'nuevo.completarPedido':
+		#Parametros
+		$vinos = array($parameters['#consultarAlternativa.vino']);
+		$nbotellas = array($parameters['#consultarAlternativa.nbotellas']);
+		#Recorrer Vinos > #Generar Pedido (key > vino)
+		for ($i = 0; $i <= count($vinos); $i++) 
+		{
+			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
+		}
 		error_log('PEDIDO COMPLETADO');
 		$outputtext = '¡Perfecto! Le adjunto un resumen del pedido: ...';
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
