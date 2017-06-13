@@ -17,6 +17,7 @@ error_log($parameters);
 switch ($action) 
 {
     case 'nuevo.consultarStock':
+		error_log('ACCION = Consultar Stock');
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
@@ -32,20 +33,23 @@ switch ($action)
 		} 
 		else
 		{
-			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
-			$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+			#$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
+			#$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock. ¿Es ésta su dirección? = ' . $direccion;
+			$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		}
         $source = 'bodegastorres.php';
 		break;
     case 'nuevo.completarPedido':
+	    error_log('ACCION = Completar Pedido');
 		#Parametros
 		$vino = $parameters['vino'];
-		$nbotellas = $parameters['nbotellas'];
+		$nbotellas = $stock[$vino];
 		$completar = $nbotellas - $stock[$vino];
 		
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. ¿Está de acuerdo?';
-		
-        error_log('Completar Pedido');
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. ¿Es ésta su dirección? = ' . $direccion;
+		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+
         break;
 	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
