@@ -25,6 +25,9 @@ class Pedido
     }
 }
 
+#Coleccion Global
+$pedidos = array();
+
 #Obtener Info. Peticion
 $json = file_get_contents('php://input'); 
 $request = json_decode($json, true);
@@ -80,14 +83,14 @@ switch ($action)
 		break;
     #------------------------------- Confirmar Direccion --------------------------
 	case 'nuevo.completarPedido':
-		error_log('PEDIDO COMPLETADO = ' . $Pedido->vino . ' -> ' . $Pedido->unidades);
+		error_log('PEDIDO COMPLETADO');
 		$outputtext = '¡Perfecto! Le adjunto un resumen del pedido: ...';
 		#$contextout = array(array('name'=>'resumen', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		foreach ($pedidos as &$Pedido)
 		{
-			$outputtext = $outputtext . '\n' . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' XXX €';
+			$outputtext = $outputtext . '\n' . $Pedido->unidades . ' x ' . $Pedido-vino . ' = ' . ' X €';
 		}
-		$outputtext = $outputtext . '\nTotal = XXX €';
+		$outputtext = $outputtext . '\nTotal = X €';
 		break;
 	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
