@@ -2,10 +2,6 @@
 header('Content-Type: application/json');
 ob_start();
 
-#Parametros Globales
-$vino = 'Ninguno';
-$nBotellas = 0;
-
 #Parametros Ficticios (BD)
 $stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
@@ -22,7 +18,7 @@ switch ($action)
 		#Parametros
 		$vinos = array($parameters['vino']);
 		#Bucle Parámetros 
-		foreach ($vino as $vinos) {
+		foreach ($vinos as $vino) {
 			error_log('Petición: ' . $vino);
 		}
 		#$vino = $parameters['vino'][0];
