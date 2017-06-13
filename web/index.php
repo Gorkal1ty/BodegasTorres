@@ -33,45 +33,51 @@ $parameters = $request['result']['parameters'];
 
 switch ($action) 
 {
+	#------------------------------- Consultar Stock --------------------------
     case 'nuevo.consultarStock':
 		#Parametros
 		$vinos = array($parameters['vino']);
 		$nbotellas = array($parameters['nbotellas']);
-		#Recorrer Vinos
-		for ($i = 0; $i <= count($vinos); $i++) {
-			#Generar Pedido (key > vino)
+		#Recorrer Vinos > #Generar Pedido (key > vino)
+		for ($i = 0; $i <= count($vinos); $i++) 
+		{
 			$pedidos[] = new Pedido($vinos[0][$i], $nbotellas[0][$i], '');
 		}
-		foreach ($pedidos as &$Pedido){
-			#Mostrar Pedidos
+		#Comprobar Stock
+		$stockTodos = 'OK';
+		foreach ($pedidos as &$Pedido)
+		{
 			error_log("PEDIDO = " . $Pedido->vino . " -> " . $Pedido->unidades);
-			#Comprobar Stock
-			$stockTodos = "OK";
-			if ($stock[$Pedido->vino] >= $Pedido->unidades){
+			if ($stock[$Pedido->vino] >= $Pedido->unidades)
+			{
 				#Existe Stock
 				$Pedido->stock = 'OK';
 			} 
-			else{
+			else
+			{
 				$stockTodos = "";
 			}
 		}
-		if($stockTodos == 'OK'){
+		if($stockTodos == 'OK')
+		{
+			#TODOS STOCK OK -> Consultar Direccion
 			$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
+			$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		}
-		else{
-			foreach ($pedidos as &$Pedido){
+		else
+		{
+			foreach ($pedidos as &$Pedido)
+			{
 				#Localizar pedido sin Stock y consultar
-				
+				if ($Pedido->stock != 'OK')
+				{
+					$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$Pedido->vino] . ' botellas de ' . $Pedido->vino . '. Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($Pedido->unidades - $stock[$Pedido->vino]) . ' unidades o sustituirlo por completo con ' . $Pedido->unidades . ' botellas.';
+				}
 			}
-			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', ¿Las quiere?';
-		}
-		
-
-		
-		$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+		}		
         $source = 'bodegastorres.php';
 		break;
-    
+    #------------------------------- Confirmar Direccion --------------------------
 	case 'nuevo.confirmarDireccion':
         error_log('Confirmar Direccion');
         break;
