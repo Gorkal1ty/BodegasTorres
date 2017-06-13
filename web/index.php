@@ -6,6 +6,23 @@ ob_start();
 $stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
 
+#Clase Pedido
+class Pedido
+{
+	public $vino;
+	public $unidades;
+	#public $coste;
+	#public $estado;
+	
+	public function __construct($v, $u) #$c, $e
+	{
+        $this->vino = $v;
+		$this->unidades = $u;
+		#$this->coste = $c;
+		#$this->estado = $e;
+    }
+}
+
 #Obtener Info. Peticion
 $json = file_get_contents('php://input'); 
 $request = json_decode($json, true);
@@ -23,17 +40,13 @@ switch ($action)
 		{
 			#Generar Pedido (key > vino)
 			$pedidos[$vinos[0][$i]] = $nbotellas[0][$i];
-		}
-		foreach ($pedidos as &$pedido)
+			$pedidos[] = new $Pedido($vinos[0][$i], $nbotellas[0][$i]);
+			}
+		foreach ($pedidos as &$Pedido)
 		{
 			#Mostrar Pedidos
-			error_log("PEDIDO = " . $pedido[0] . " -> " . $pedido[1]);
+			error_log("PEDIDO = " . $Pedido->vino . " -> " . $Pedido->unidades);
 		}
-		#$vino = $parameters['vino'][0];
-		#$nbotellas = $parameters['nbotellas'][0];
-		
-		#error_log('Petición: ' . $nbotellas . ' de ' . $vino);
-		#error_log($stock[$vino] . ' botellas en stock');
 		
 		#Consultar Stock
 		if ($stock[$vino]<$nbotellas) 
