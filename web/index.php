@@ -48,7 +48,7 @@ switch ($action)
 		$completar = $parameters['nbotellas'] - $stock[$vino];
 		
 		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. ¿Es ésta su dirección? = ' . $direccion;
-		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>3, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
 
         break;
 	case 'nuevo.confirmarDireccion':
