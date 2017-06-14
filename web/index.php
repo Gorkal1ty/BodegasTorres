@@ -34,7 +34,6 @@ function obtenerStock($n, $lista)
 }
 
 #Parametros Ficticios (BD)
-#$stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
 
 #Obtener Info. Peticion
@@ -115,6 +114,11 @@ switch ($action)
 		}
 		error_log('Dirección = ' . $direccion);
 		error_log('...ALMACENAR...');
+		
+		#Almacenar en CSV
+		$fichero = fopen("stock.csv", "a");
+		fputcsv($fichero, $fila);
+		fclose($fichero);
 		
         break;
 }
