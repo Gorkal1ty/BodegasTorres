@@ -123,6 +123,12 @@ switch ($action)
 				$Stock->stock = obtenerStock($vino, $arrayStock) - $nbotellas;
 				error_log('Stock ' . $vino . ' = ' . $Stock->stock . ' unidades');
 			}
+			#Alternativa (Completar con Gran Coronas)
+			if($Stock->nombre=='Gran Coronas' and $completar!=0)
+			{
+				$Stock->stock = obtenerStock('Gran Coronas', $arrayStock) - $completar;
+				error_log('Stock Gran Coronas = ' . $Stock->stock . ' unidades');
+			}
 		}
 		
 		#Actualizar CSV
