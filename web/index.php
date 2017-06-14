@@ -120,7 +120,14 @@ switch ($action)
 		actualizarStock($vino, $nuevoStock);
 		
 		#comprobar de nuevo
-
+		$contenido = file_get_contents($CSV);
+		$filas = array_map("str_getcsv", explode("\n", $contenido));
+		for($i=1;$i<=$VINOS;$i++)
+		{
+			$columnas = array(explode(';', $filas[$i][0]));
+			error_log($columnas[0][0] . ' = ' . $columnas[0][3] . ' unidades');
+		}
+		
         break;
 }
 
@@ -152,9 +159,9 @@ function actualizarStock($vino, $nuevoStock)
 		{
 			$columnas[0][3] = $nuevoStock;
 		}
-		error_log($columnas[0] . " - " . $columnas);
 		fputcsv($fp, $columnas[0]);
 	}
+	fclose($fp);
 }
 
 ?>
