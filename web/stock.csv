@@ -1,6 +1,6 @@
-NOMBRE;TIPO;PRECIO;STOCK
-Celeste;1;15;10
-Viña Esmeralda;1;6;10
-Gran Coronas;1;12;10
-Viña Sol;1;10;10
-Mas La Plana;1;50;10
+NOMBRE,TIPO,PRECIO,STOCK
+Celeste,1,15,10
+ViÃ±a Esmeralda,1,6,10
+Gran Coronas,1,12,10
+ViÃ±a Sol,1,10,10
+Mas La Plana,1,50,10
