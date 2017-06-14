@@ -38,7 +38,8 @@ for($i=1;$i<count($filas)-1;$i++)
 	$columnas = array(explode(';', $filas[$i][0]));
 	if($columnas[0][0]=='')
 	{
-		break;
+		error_log("HOLA");
+		break 2;
 	}
 	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
 }
