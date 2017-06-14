@@ -24,6 +24,7 @@ class Stock
 
 function obtenerStock($n)
 {
+	error_log($stock[0]->nombre);
 	foreach ($stock as &$Stock)
 	{
 		if($Stock->nombre==$n)
@@ -57,7 +58,7 @@ for($i=1;$i<=$VINOS;$i++)
 error_log("STOCK");
 for($i=0;$i<$VINOS;$i++)
 {
-	error_log($stock[$i]->nombre . '(' . $stock[$i]->tipo . ') = ' . $stock[$i]->precio . '€ - ' . $stock[$i]->stock . ' en Stock');
+	error_log($stock[$i]->nombre . ' (' . $stock[$i]->tipo . ') = ' . $stock[$i]->precio . '€ - ' . $stock[$i]->stock . ' en Stock');
 }
 
 switch ($action) 
@@ -68,7 +69,7 @@ switch ($action)
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
 		
-		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
+		error_log('Petición: ' . $nbotellas . ' botellas de ' . $vino);
 		error_log(obtenerStock($vino) . ' botellas en stock');
 		
 		#Consultar Stock
