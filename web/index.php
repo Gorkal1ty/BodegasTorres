@@ -22,7 +22,19 @@ class Stock
     }
 }
 
+function obtenerStock($n)
+{
+	foreach ($vino as &$Stock)
+	{
+		if($vino->nombre==$n)
+		{
+			return $vino->stock;
+		}
+	}
+}
+
 #Parametros Ficticios (BD)
+$stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
 
 #Obtener Info. Peticion
@@ -57,7 +69,7 @@ switch ($action)
 		$nbotellas = $parameters['nbotellas'];
 		
 		error_log('Petición: ' . $nbotellas . ' de ' . $vino);
-		error_log($stock[$vino] . ' botellas en stock');
+		error_log(obtenerStock($vino) . ' botellas en stock');
 		
 		#Consultar Stock
 		if ($stock[$vino]<$nbotellas) 
