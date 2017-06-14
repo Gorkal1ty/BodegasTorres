@@ -146,7 +146,7 @@ ob_end_clean();
 echo json_encode($output);
 
 
-function actualizarStock($array)
+function actualizarCSV($array)
 {
 	error_log('ACTUALIZANDO STOCK');
 	global $CSV;
