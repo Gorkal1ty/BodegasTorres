@@ -33,9 +33,12 @@ $parameters = $request['result']['parameters'];
 $file="stock.csv";
 $csv= file_get_contents($file);
 $filas = array_map("str_getcsv", explode("\n", $csv));
-error_log(count($filas));
 for($i=1;$i<count($filas)-1;$i++)
 {
+	if($filas[$i][0]=='')
+	{
+		break;
+	}
 	$columnas = array(explode(';', $filas[$i][0]));
 	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
 }
