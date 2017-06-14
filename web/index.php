@@ -44,13 +44,13 @@ $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
 #Obtener CSV Stock
-if (($handle = fopen($CSV, "r")) !== FALSE) 
+if (($fichero = fopen($CSV, "r")) !== FALSE) 
 {
-	while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
+	while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
 	{
 		$arrayStock[] = new Stock($data[0], $data[1], $data[2], $data[3]);
 	}
-	fclose($handle);
+	fclose($fichero);
 }
 
 #LOG Stock
@@ -115,10 +115,18 @@ switch ($action)
 		}
 		error_log('Dirección = ' . $direccion);
 		
-		#Calcular Stock
-		$nuevoStock = obtenerStock($vino, $arrayStock) - $nbotellas;
+		#Actualizar Array
+		foreach ($arrayStock as $Stock)
+		{
+			if($Stock->nombre==$vino)
+			{
+				$Stock->stock = obtenerStock($vino, $arrayStock) - $nbotellas;
+				error_log('Stock ' . $vino . ' = ' . $Stock->stock . ' unidades');
+			}
+		}
+		
 		#Actualizar CSV
-		actualizarStock($vino, $nuevoStock);
+		actualizarCSV($arrayStock);
 		
 		#comprobar de nuevo
 		
@@ -138,28 +146,17 @@ ob_end_clean();
 echo json_encode($output);
 
 
-function actualizarStock($vino, $nuevoStock)
+function actualizarStock($array)
 {
-	error_log('ACTUALIZANDO STOCK: ' . $vino . ' = ' . $nuevoStock);
+	error_log('ACTUALIZANDO STOCK');
 	global $CSV;
-	global $VINOS;
 	
-	#$fp = fopen($CSV, 'w');
-	if (($handle = fopen($CSV, "r")) !== FALSE) 
+	$fichero = fopen($CSV, 'w');
+	foreach($array as $fila)
 	{
-		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
-		{
-			error_log('WHILE');
-			if ($data[0]==$vino)
-			{
-				error_log("HE ENTRADO");
-				$data[3]==$nuevoStock;
-			}
-			#fputcsv($fp, $data);
-		}
-		fclose($handle);
+		fputcsv($fichero, $fila);
 	}
-
+	fclose($fichero);
 }
 
 ?>
