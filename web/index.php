@@ -23,7 +23,6 @@ class Stock
 }
 
 #Parametros Ficticios (BD)
-$stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
 
 #Obtener Info. Peticion
@@ -32,7 +31,7 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
-#Obtener CSV > Array
+#Obtener CSV Stock
 $file="stock.csv";
 $csv= file_get_contents($file);
 $filas = array_map("str_getcsv", explode("\n", $csv));
@@ -73,7 +72,6 @@ switch ($action)
 			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock. ¿Es ésta su dirección? = ' . $direccion;
 			$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		}
-        $source = 'bodegastorres.php';
 		break;
     case 'nuevo.completarPedido':
 	    error_log('ACCION = Completar Pedido');
@@ -106,6 +104,7 @@ switch ($action)
         break;
 }
 
+$source = 'bodegastorres.php';
 #Devolver JSON
 $output['speech'] = $outputtext;
 $output['displayText'] = $outputtext;
