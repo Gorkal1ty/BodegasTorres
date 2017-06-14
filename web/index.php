@@ -50,7 +50,7 @@ $filas = array_map("str_getcsv", explode("\n", $csv));
 for($i=1;$i<=$VINOS;$i++)
 {
 	$columnas = array(explode(';', $filas[$i][0]));
-	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
+	$arrayStock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
 }
 
 #LOG Stock
@@ -66,15 +66,17 @@ switch ($action)
 		error_log('ACCION = Consultar Stock');
 		#Parametros
 		$vino = $parameters['vino'];
+		$stock = obtenerStock($vino, $arrayStock);
 		$nbotellas = $parameters['nbotellas'];
 		
+		#Log
 		error_log('Petición: ' . $nbotellas . ' botellas de ' . $vino);
-		error_log(obtenerStock($vino, $stock) . ' botellas en stock');
+		error_log(obtenerStock($vino, $arrayStock) . ' botellas en stock');
 		
 		#Consultar Stock
-		if ($stock[$vino]<$nbotellas) 
+		if ($stock<$nbotellas) 
 		{
-			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock[$vino] . ' existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($nbotellas - $stock[$vino]) . ' unidades o sustituirlo por completo con ' . $nbotellas . ' botellas.';
+			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock . ' existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($nbotellas - $stock) . ' unidades o sustituirlo por completo con ' . $nbotellas . ' botellas.';
 			$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));;
 		} 
 		else
@@ -89,9 +91,10 @@ switch ($action)
 	    error_log('ACCION = Completar Pedido');
 		#Parametros
 		$vino = $parameters['vino'];
-		$nbotellas = $stock[$vino];
-		$completar = $parameters['nbotellas'] - $stock[$vino];
-		
+		$stock = obtenerStock($vino, $arrayStock);
+		$nbotellas = $stock;
+		$completar = $parameters['nbotellas'] - $stock;
+
 		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. ¿Es ésta su dirección? = ' . $direccion;
 		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
 
