@@ -22,10 +22,9 @@ class Stock
     }
 }
 
-function obtenerStock($n)
+function obtenerStock($n, $lista)
 {
-	error_log($stock[0]->nombre);
-	foreach ($stock as &$Stock)
+	foreach ($lista as &$Stock)
 	{
 		if($Stock->nombre==$n)
 		{
@@ -70,7 +69,7 @@ switch ($action)
 		$nbotellas = $parameters['nbotellas'];
 		
 		error_log('Petición: ' . $nbotellas . ' botellas de ' . $vino);
-		error_log(obtenerStock($vino) . ' botellas en stock');
+		error_log(obtenerStock($vino, $stock) . ' botellas en stock');
 		
 		#Consultar Stock
 		if ($stock[$vino]<$nbotellas) 
