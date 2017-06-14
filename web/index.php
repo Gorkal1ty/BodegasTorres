@@ -36,16 +36,11 @@ $filas = array_map("str_getcsv", explode("\n", $csv));
 for($i=1;$i<count($filas)-1;$i++)
 {
 	$columnas = array(explode(';', $filas[$i][0]));
-	if($columnas[0][0]=='')
-	{
-		error_log("HOLA");
-		break;
-	}
 	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
 }
 
 #LOG Stock
-error_log('STOCK');
+error_log(count($stock));
 for($i=0;$i<count($stock);$i++)
 {
 	error_log($stock[$i]->nombre);
