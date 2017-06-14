@@ -159,7 +159,7 @@ function actualizarStock($vino, $nuevoStock)
 		{
 			$columnas[0][3] = $nuevoStock;
 		}
-		fputcsv($fp, $columnas[0]);
+		fputcsv($fp, $columnas);
 	}
 	fclose($fp);
 }
