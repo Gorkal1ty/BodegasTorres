@@ -122,7 +122,7 @@ switch ($action)
 		#comprobar de nuevo
 		$contenido = file_get_contents($CSV);
 		$filas = array_map("str_getcsv", explode("\n", $contenido));
-		for($i=1;$i<=$VINOS;$i++)
+		for($i=0;$i<$VINOS;$i++)
 		{
 			$columnas = array(explode(';', $filas[$i][0]));
 			error_log($columnas[0][0] . ' = ' . $columnas[0][3] . ' unidades');
