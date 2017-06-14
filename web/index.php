@@ -12,7 +12,12 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
-error_log($parameters);
+#Obtener CSV
+$file="1_23.csv";
+$csv= file_get_contents($file);
+$array = array_map("str_getcsv", explode("\n", $csv));
+$json = json_encode($array);
+error_log($json);
 
 switch ($action) 
 {
