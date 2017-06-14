@@ -36,7 +36,7 @@ $parameters = $request['result']['parameters'];
 $file="stock.csv";
 $csv= file_get_contents($file);
 $filas = array_map("str_getcsv", explode("\n", $csv));
-for($i=1;$i<$VINOS-1;$i++)
+for($i=1;$i<$VINOS;$i++)
 {
 	$columnas = array(explode(';', $filas[$i][0]));
 	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
