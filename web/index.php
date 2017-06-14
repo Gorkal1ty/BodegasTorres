@@ -114,7 +114,6 @@ switch ($action)
 			error_log('Gran Coronas = ' . $completar . ' unidades');
 		}
 		error_log('Dirección = ' . $direccion);
-		error_log('...ALMACENAR...');
 		
 		#Calcular Stock
 		$nuevoStock = obtenerStock($vino, $arrayStock) - $nbotellas;
@@ -142,10 +141,10 @@ function actualizarStock($vino, $nuevoStock)
 	global $CSV;
 	$fp = fopen($CSV, 'w');
 	$fila = 1;
-	if (($handle = fopen($CSV, "r")) !== FALSE) 
+	if (($handle = fopen($CSV, 'r')) !== FALSE) 
 	{
 		error_log('IF1');
-		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) 
+		while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) 
 		{
 			error_log('WHILE');
 			error_log($data[0]);
