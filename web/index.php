@@ -155,7 +155,7 @@ function actualizarCSV($array)
 	foreach($array as $Stock)
 	{
 		#Conversión de Objeto (Stock) a Array
-		$fila = var_dump((array)$Stock);
+		$fila = (array)$Stock;
 		fputcsv($fichero, $fila);
 	}
 	fclose($fichero);
