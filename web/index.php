@@ -5,34 +5,6 @@ ob_start();
 #Constantes
 $VINOS = 5;
 
-#Clase Stock
-class Stock
-{
-	public $nombre;
-	public $tipo;
-	public $precio;
-	public $stock;		
-	
-	public function __construct($n, $t, $p, $s)
-	{
-        $this->nombre = $n;
-		$this->tipo = $t;
-		$this->precio = $p;
-		$this->stock = $s;
-    }
-}
-
-function obtenerStock($n, $lista)
-{
-	foreach ($lista as &$Stock)
-	{
-		if($Stock->nombre==$n)
-		{
-			return $Stock->stock;
-		}
-	}
-}
-
 #Parametros Ficticios (BD)
 #$stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
@@ -60,6 +32,34 @@ for($i=0;$i<$VINOS;$i++)
 	error_log($stock[$i]->nombre . ' (' . $stock[$i]->tipo . ') = ' . $stock[$i]->precio . '€ - ' . $stock[$i]->stock . ' en Stock');
 }
 
+#Clase Stock
+class Stock
+{
+	public $nombre;
+	public $tipo;
+	public $precio;
+	public $stock;		
+	
+	public function __construct($n, $t, $p, $s)
+	{
+        $this->nombre = $n;
+		$this->tipo = $t;
+		$this->precio = $p;
+		$this->stock = $s;
+    }
+}
+
+function obtenerStock($n)
+{
+	foreach ($stock as &$Stock)
+	{
+		if($Stock->nombre==$n)
+		{
+			return $Stock->stock;
+		}
+	}
+}
+
 switch ($action) 
 {
     case 'nuevo.consultarStock':
@@ -69,7 +69,7 @@ switch ($action)
 		$nbotellas = $parameters['nbotellas'];
 		
 		error_log('Petición: ' . $nbotellas . ' botellas de ' . $vino);
-		error_log(obtenerStock($vino, $stock) . ' botellas en stock');
+		error_log(obtenerStock($vino) . ' botellas en stock');
 		
 		#Consultar Stock
 		if ($stock[$vino]<$nbotellas) 
