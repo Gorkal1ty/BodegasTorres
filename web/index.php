@@ -55,9 +55,9 @@ if (($fichero = fopen($CSV, "r")) !== FALSE)
 
 #LOG Stock
 error_log("STOCK");
-for($i=0;$i<$VINOS;$i++)
+foreach($arrayStock as &$Stock)
 {
-	error_log($arrayStock[$i]->nombre . ' (' . $arrayStock[$i]->tipo . ') = ' . $arrayStock[$i]->precio . '€ - ' . $arrayStock[$i]->stock . ' en Stock');
+	error_log($Stock->nombre . ' (' . $Stock->tipo . ') = ' . $Stock->precio . '€ - ' . $Stock->stock . ' en Stock');
 }
 
 switch ($action) 
