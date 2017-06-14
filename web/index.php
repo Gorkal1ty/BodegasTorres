@@ -24,17 +24,17 @@ class Stock
 
 function obtenerStock($n)
 {
-	foreach ($vino as &$Stock)
+	foreach ($stock as &$Stock)
 	{
-		if($vino->nombre==$n)
+		if($Stock->nombre==$n)
 		{
-			return $vino->stock;
+			return $Stock->stock;
 		}
 	}
 }
 
 #Parametros Ficticios (BD)
-$stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
+#$stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
 
 #Obtener Info. Peticion
