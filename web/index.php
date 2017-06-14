@@ -129,7 +129,7 @@ switch ($action)
 		actualizarCSV($arrayStock);
 		
 		#comprobar de nuevo
-		
+		mostrarCSV()
 		
         break;
 }
@@ -152,13 +152,26 @@ function actualizarCSV($array)
 	global $CSV;
 	
 	$fichero = fopen($CSV, 'w');
-	foreach($array as $Stock)
+	foreach($array as &$Stock)
 	{
 		#Conversión de Objeto (Stock) a Array
 		$fila = (array)$Stock;
 		fputcsv($fichero, $fila);
 	}
 	fclose($fichero);
+}
+
+function mostrarCSV()
+{
+	global $CSV;
+	if (($fichero = fopen($CSV, "r")) !== FALSE) 
+	{
+		while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
+		{
+			error_log($data[0] . " -- " . $data[1] . " -- " . $data[2] . " -- " . $data[3]);
+		}
+		fclose($fichero);
+	}
 }
 
 ?>
