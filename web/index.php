@@ -147,6 +147,7 @@ function actualizarStock($vino, $nuevoStock)
 		$columnas = array(explode(';', $filas[$i][0]));
 		if($columnas[0][0]==$vino)
 		{
+			error_log("IF");
 			$columnas[0][3] = $nuevoStock;
 		}
 		fputcsv($fp, $columnas);
