@@ -138,6 +138,7 @@ echo json_encode($output);
 
 function actualizarStock($vino, $nuevoStock)
 {
+	global $CSV;
 	$fp = fopen($CSV, 'w');
 	$fila = 1;
 	if (($handle = fopen($CSV, "r")) !== FALSE) 
