@@ -37,8 +37,8 @@ for($i=1;$i<count($filas)-1;$i++)
 {
 	error_log('FILA' . $i . ' = ' . $filas[$i][0]);
 	$columnas = array(explode(';', $filas[$i][0]));
-	error_log('COLUMNAS = ' . $columnas[0][0] . " - " .  $columnas[1] . " - " .  $columnas[2] . " - " .  $columnas[3]);
-	$stock[] = new Stock($columnas[0], $columnas[1], $columnas[2], $columnas[3]);
+	error_log('COLUMNAS = ' . $columnas[0][0] . " - " .  $columnas[1][0] . " - " .  $columnas[2][0] . " - " .  $columnas[3][0]);
+	$stock[] = new Stock($columnas[0][0], $columnas[1][0], $columnas[2][0], $columnas[3][0]);
 }
 error_log('ARRAY = ' . $array[1][0]);
 $json = json_encode($array);
