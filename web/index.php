@@ -4,6 +4,7 @@ ob_start();
 
 #Constantes
 $VINOS = 5;
+$CSV = 'stock.csv';
 
 #Clase Stock
 class Stock
@@ -115,10 +116,10 @@ switch ($action)
 		error_log('Dirección = ' . $direccion);
 		error_log('...ALMACENAR...');
 		
-		#Almacenar en CSV
-		$fichero = fopen("stock.csv", "a");
-		fputcsv($fichero, $fila);
-		fclose($fichero);
+		#Calcular Stock
+		$nuevoStock = obtenerStock($vino, $arrayStock) - $nbotellas;
+		#Actualizar CSV
+		actualizarStock($vino, $nuevoStock);
 		
         break;
 }
@@ -133,4 +134,26 @@ $output['followupEvent'] = $followupEvent;
 echo json_encode($output);
 ob_end_clean();
 echo json_encode($output);
+
+
+function actualizarStock($vino, $nuevoStock)
+{
+	$fp = fopen($CSV, 'w');
+	$fila = 1;
+	if (($handle = fopen($CSV, "r")) !== FALSE) 
+	{
+		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) 
+		{
+			error_log($data[0]);
+			$num = count($data);
+			if (empty($data[0])==$vino)
+			{
+				$data[3] = $nuevoStock;
+				fputcsv($fp, $data);
+			}
+			$fila++;
+		}
+		fclose($handle);
+	}
+}
 ?>
