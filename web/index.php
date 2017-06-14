@@ -57,7 +57,7 @@ for($i=1;$i<=$VINOS;$i++)
 error_log("STOCK");
 for($i=0;$i<$VINOS;$i++)
 {
-	error_log($stock[$i]->nombre . ' (' . $stock[$i]->tipo . ') = ' . $stock[$i]->precio . '€ - ' . $stock[$i]->stock . ' en Stock');
+	error_log($arrayStock[$i]->nombre . ' (' . $arrayStock[$i]->tipo . ') = ' . $arrayStock[$i]->precio . '€ - ' . $arrayStock[$i]->stock . ' en Stock');
 }
 
 switch ($action) 
@@ -71,7 +71,7 @@ switch ($action)
 		
 		#Log
 		error_log('Petición: ' . $nbotellas . ' botellas de ' . $vino);
-		error_log(obtenerStock($vino, $arrayStock) . ' botellas en stock');
+		error_log($stock . ' botellas en stock');
 		
 		#Consultar Stock
 		if ($stock<$nbotellas) 
