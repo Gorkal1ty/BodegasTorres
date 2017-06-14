@@ -144,7 +144,7 @@ function actualizarStock($vino, $nuevoStock)
 	global $CSV;
 	global $VINOS;
 	
-	$fp = fopen($CSV, 'w');
+	#$fp = fopen($CSV, 'w');
 	if (($handle = fopen($CSV, "r")) !== FALSE) 
 	{
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
@@ -155,7 +155,7 @@ function actualizarStock($vino, $nuevoStock)
 				error_log("HE ENTRADO");
 				$data[3]==$nuevoStock;
 			}
-			fputcsv($fp, $data);
+			#fputcsv($fp, $data);
 		}
 		fclose($handle);
 	}
