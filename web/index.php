@@ -144,7 +144,8 @@ function actualizarStock($vino, $nuevoStock)
 	if (($handle = fopen($CSV, 'r')) !== FALSE) 
 	{
 		error_log('IF1');
-		error_log(fgetcsv($handle, 1000, ';'));
+		$data = fgetcsv($handle, 1000, ';');
+		error_log($data[0][0]);
 		while (($data = fgetcsv($handle, 1000, ';')) !== FALSE) 
 		{
 			error_log('WHILE');
