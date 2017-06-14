@@ -39,7 +39,7 @@ for($i=1;$i<count($filas)-1;$i++)
 	if($columnas[0][0]=='')
 	{
 		error_log("HOLA");
-		break 2;
+		break;
 	}
 	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
 }
