@@ -2,6 +2,23 @@
 header('Content-Type: application/json');
 ob_start();
 
+#Clase Stock
+class Stock
+{
+	public $nombre;
+	public $tipo;
+	public $precio;
+	public $stock;		
+	
+	public function __construct($n, $t, $p, $s)
+	{
+        $this->nombre = $n;
+		$this->tipo = $t;
+		$this->precio = $p;
+		$this->stock = $s;
+    }
+}
+
 #Parametros Ficticios (BD)
 $stock = array( 'Celeste' => 10, 'Viña Esmeralda' => 10, 'Gran Coronas' => 10, 'Viña Sol' => 10);
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
@@ -12,13 +29,16 @@ $request = json_decode($json, true);
 $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
-#Obtener CSV
+#Obtener CSV > Array
 $file="stock.csv";
 $csv= file_get_contents($file);
-$array = array_map("str_getcsv", explode("\n", $csv));
-for($i=1;$i<count($array);$i++)
+$filas = array_map("str_getcsv", explode("\n", $csv));
+for($i=1;$i<count($filas)-1;$i++)
 {
-	error_log('FILA' . $i . ' = ' . $array[$i][0]);
+	error_log('FILA' . $i . ' = ' . $filas[$i][0]);
+	$columnas = array(explode(';', $filas[$i][0]));
+	error_log('COLUMNAS = ' . $columnas[0] . " - " .  $columnas[1] . " - " .  $columnas[2] . " - " .  $columnas[3]);
+	$stock[] = new Stock($columnas[0], $columnas[1], $columnas[2], $columnas[3]);
 }
 error_log('ARRAY = ' . $array[1][0]);
 $json = json_encode($array);
