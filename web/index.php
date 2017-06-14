@@ -144,6 +144,7 @@ function actualizarStock($vino, $nuevoStock)
 	{
 		$contenido= file_get_contents($CSV);
 		$filas = array_map("str_getcsv", explode("\n", $contenido));
+		error_log('FILA = ' . $filas[1][0]);
 		for($i=1;$i<=$VINOS;$i++)
 		{
 			$columnas = array(explode(';', $filas[$i][0]));
