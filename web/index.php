@@ -33,7 +33,7 @@ $parameters = $request['result']['parameters'];
 $file="stock.csv";
 $csv= file_get_contents($file);
 $filas = array_map("str_getcsv", explode("\n", $csv));
-error_log('FILAS = ' . count($filas)-1);
+error_log(count($filas));
 for($i=1;$i<count($filas)-1;$i++)
 {
 	$columnas = array(explode(';', $filas[$i][0]));
