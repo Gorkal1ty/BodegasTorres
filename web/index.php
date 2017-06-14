@@ -139,9 +139,10 @@ function actualizarStock($vino, $nuevoStock)
 	error_log('ACTUALIZANDO STOCK: ' . $vino . ' = ' . $nuevoStock);
 	global $CSV;
 	global $VINOS;
-	$fp = fopen($CSV, 'w');
+
 	$contenido = file_get_contents($CSV);
 	$filas = array_map("str_getcsv", explode("\n", $contenido));
+	$fp = fopen($CSV, 'w');
 	for($i=1;$i<=$VINOS;$i++)
 	{
 		error_log($columnas[0][0]);
