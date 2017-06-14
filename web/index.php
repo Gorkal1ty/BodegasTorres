@@ -99,6 +99,14 @@ switch ($action)
 		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
 
         break;
+	case 'nuevo.cambiarPedido':
+		error_log('ACCION = Cambiar Pedido');
+		#Parametros
+		$vino = $parameters['vino'];
+		$nbotellas = $parameters['nbotellas'];
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas. ¿Es ésta su dirección? = ' . $direccion;
+		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => 0, 'direccion'=>$direccion)));
+		break;
 	case 'nuevo.confirmarDireccion':
         error_log('ACCION = Confirmar Direccion');
 		#Parametros
