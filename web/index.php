@@ -147,7 +147,7 @@ function actualizarStock($vino, $nuevoStock)
 		for($i=1;$i<=$VINOS;$i++)
 		{
 			$columnas = array(explode(';', $filas[$i][0]));
-			error_log($columnas[0][0]);
+			error_log($columnas[0][1] . " " . $columnas[0][2] . " " . $columnas[1][0]);
 			if($columnas[0][0]==$vino)
 			{
 				error_log('IF');
