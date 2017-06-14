@@ -127,9 +127,9 @@ switch ($action)
 		
 		#Actualizar CSV
 		actualizarCSV($arrayStock);
-		
+
 		#comprobar de nuevo
-		mostrarCSV()
+		mostrarCSV();
 		
         break;
 }
