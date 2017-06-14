@@ -108,7 +108,7 @@ switch ($action)
 		$direccion = $parameters['direccion'];
 		
 		#Almacenar Pedido
-		error_log($vino . ' = ' . $nbotellas . ' unidades.');
+		error_log($vino . ' = ' . $nbotellas . ' unidades');
 		if($completar!=0)
 		{
 			error_log('Gran Coronas = ' . $completar . ' unidades');
@@ -138,17 +138,21 @@ echo json_encode($output);
 
 function actualizarStock($vino, $nuevoStock)
 {
+	error_log('ACTUALIZANDO STOCK: ' . $vino . ' = ' . $nuevoStock);
 	global $CSV;
 	$fp = fopen($CSV, 'w');
 	$fila = 1;
 	if (($handle = fopen($CSV, "r")) !== FALSE) 
 	{
+		error_log('IF1');
 		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) 
 		{
+			error_log('WHILE');
 			error_log($data[0]);
 			$num = count($data);
 			if (empty($data[0])==$vino)
 			{
+				error_log('IF2');
 				$data[3] = $nuevoStock;
 				fputcsv($fp, $data);
 			}
