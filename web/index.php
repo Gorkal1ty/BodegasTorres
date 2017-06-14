@@ -74,15 +74,21 @@ switch ($action)
 		error_log($stock . ' botellas en stock');
 		
 		#Consultar Stock
-		if ($stock<$nbotellas) 
+		if($stock==0)
 		{
+			#STOCK VACIO > Proponer Sustituir por Gran Coronas
+			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas, ¿Las quiere?';
+			$contextout = array(array('name'=>'consultarCambio', 'lifespan'=>2, 'parameters'=>array('vino'=>'Gran Coronas', 'nBotellas'=>$nbotellas)));;
+		}
+		else if ($stock<$nbotellas) 
+		{
+			#STOCK INSUFICIENTE > Completar Pedido o Sustituir por Gran Coronas
 			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock . ' existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($nbotellas - $stock) . ' unidades o sustituirlo por completo con ' . $nbotellas . ' botellas.';
 			$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));;
 		} 
 		else
 		{
-			#$followupEvent = array('name'=>'consultarDireccion','data'=>array('nBotellas'=>$nbotellas, 'vino'=>$vino, 'direccion'=>$direccion));
-			#$contextout = array(array('name'=>'nuevopedido', 'lifespan'=>5, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+			#STOCK OK
 			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock. ¿Es ésta su dirección? = ' . $direccion;
 			$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		}
