@@ -35,14 +35,16 @@ $csv= file_get_contents($file);
 $filas = array_map("str_getcsv", explode("\n", $csv));
 for($i=1;$i<count($filas)-1;$i++)
 {
-	error_log('FILA' . $i . ' = ' . $filas[$i][0]);
 	$columnas = array(explode(';', $filas[$i][0]));
-	error_log('COLUMNAS = ' . $columnas[0][0] . " - " .  $columnas[0][1] . " - " .  $columnas[0][2] . " - " .  $columnas[0][3]);
 	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
 }
-error_log('ARRAY = ' . $array[1][0]);
-$json = json_encode($array);
-error_log($json);
+
+#LOG Stock
+error_log('STOCK');
+for($i=0;$i<count($stock);$i++)
+{
+	error_log($stock[$i]->nombre);
+}
 
 switch ($action) 
 {
