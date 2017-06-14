@@ -43,9 +43,10 @@ for($i=1;$i<=$VINOS;$i++)
 }
 
 #LOG Stock
+error_log("STOCK");
 for($i=0;$i<$VINOS;$i++)
 {
-	error_log($stock[$i]->nombre);
+	error_log($stock[$i]->nombre . '(' . $stock[$i]->tipo . ') = ' . $stock[$i]->precio . '€ - ' . $stock[$i]->stock . ' en Stock');
 }
 
 switch ($action) 
