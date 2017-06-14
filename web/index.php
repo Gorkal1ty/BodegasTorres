@@ -37,7 +37,7 @@ for($i=1;$i<count($filas)-1;$i++)
 {
 	error_log('FILA' . $i . ' = ' . $filas[$i][0]);
 	$columnas = array(explode(';', $filas[$i][0]));
-	error_log('COLUMNAS = ' . $columnas[0][0] . " - " .  $columnas[][1] . " - " .  $columnas[0][2] . " - " .  $columnas[0][3]);
+	error_log('COLUMNAS = ' . $columnas[0][0] . " - " .  $columnas[0][1] . " - " .  $columnas[0][2] . " - " .  $columnas[0][3]);
 	$stock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
 }
 error_log('ARRAY = ' . $array[1][0]);
