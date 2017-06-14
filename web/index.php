@@ -16,7 +16,7 @@ $parameters = $request['result']['parameters'];
 $file="stock.csv";
 $csv= file_get_contents($file);
 $array = array_map("str_getcsv", explode("\n", $csv));
-error_log('ARRAY = ' . $array[0][0]);
+error_log('ARRAY = ' . $array[1][0]);
 $json = json_encode($array);
 error_log($json);
 
