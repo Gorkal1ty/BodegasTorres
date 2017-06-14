@@ -44,12 +44,13 @@ $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
 #Obtener CSV Stock
-$contenido = file_get_contents($CSV);
-$filas = array_map("str_getcsv", explode("\n", $contenido));
-for($i=1;$i<=$VINOS;$i++)
+if (($handle = fopen($CSV, "r")) !== FALSE) 
 {
-	$columnas = array(explode(',', $filas[$i][0]));
-	$arrayStock[] = new Stock($columnas[0][0], $columnas[0][1], $columnas[0][2], $columnas[0][3]);
+	while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
+	{
+		$arrayStock[] = new Stock($data[0], $data[1], $data[2], $data[3]);
+	}
+	fclose($handle);
 }
 
 #LOG Stock
@@ -154,7 +155,6 @@ function actualizarStock($vino, $nuevoStock)
 	{
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
 		{
-			$num = count($data);
 			if ($data[0]==$vino)
 			{
 				error_log("HE ENTRADO");
