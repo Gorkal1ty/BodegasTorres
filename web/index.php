@@ -119,6 +119,8 @@ switch ($action)
 		#Actualizar CSV
 		actualizarStock($vino, $nuevoStock);
 		
+		#comprobar de nuevo
+
         break;
 }
 
@@ -146,14 +148,12 @@ function actualizarStock($vino, $nuevoStock)
 	for($i=1;$i<=$VINOS;$i++)
 	{
 		$columnas = array(explode(';', $filas[$i][0]));
-		error_log($columnas[0][0]);
 		if($columnas[0][0]==$vino)
 		{
-			error_log("IF");
 			$columnas[0][3] = $nuevoStock;
-			error_log('Stock = ' . $columnas[0][3]);
 		}
-		fputcsv($fp, $columnas);
+		error_log($columnas[0] . " - " . $columnas);
+		fputcsv($fp, $columnas[0]);
 	}
 }
 
