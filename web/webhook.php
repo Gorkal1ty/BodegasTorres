@@ -176,7 +176,7 @@ switch ($action)
 		
 		break;
 	#-------- CONSULTAR CATALOGO------------ Redacta breve resumen de los vinos con su tipo y precio	PENDIENTE
-	case 'consulta.Catalogo'
+	case 'consulta.Catalogo':
 		error_log('ACCION = Confirmar Direccion');
 		
 		
