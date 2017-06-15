@@ -1,124 +1,60 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="author" content="JMSR">
-		<meta name="description" content="Plantilla para documento HTML 5">
-		<meta name="keywords" content="HTML, CSS">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TORRES</title>
 
-		<title>Plantilla para documento HTML 5</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dataTables.bootstrap.css" rel="stylesheet">
 
-		<link rel="icon" type="image/png" href="favicon.ico">
-		<link rel="stylesheet" type="text/css" href="base.css">
-	<style>
-    *
-    {
-      margin: 0;
-      padding: 0;
-    }
-    #espacioSuperior
-    {
-      background-color: #E6E6E6;
-    }
-    #contenedorPagina
-    {
-      margin: 0 auto;
-      border: 1px solid #9900CC;
-      height: 85%;
-    }
+  </head>
 
-    #encabezado
-    {
-      height: 50px;
-      background-color: #FF3300;
-    }
-    #aLaIzquierda
-    {
-      width: 20%;
-      height: 500px;
-      float: left;
-      background-color: #0066FF;
-    }
-    #contenidoPrincipal
-    {
-      width: 60%;
-      float: left;
-      background-color: #FFFFFF;
-    }
-    #aLaDerecha
-    {
-      width: 20%;
-      height: 500px;
-      float: right;
-      background-color: #006600;
-    }
-    #piePagina
-    {
-      clear: both;
-      height: 25px;
-      background-color: #CC6699;
-    }
-	
-	table 
-	{
-		font-family: arial, sans-serif;
-		border-collapse: collapse;
-		width: 100%;
-	}
-	td, th 
-	{
-		border: 1px solid #dddddd;
-		text-align: left;
-		padding: 8px;
-	}
-	tr:nth-child(even) 
-	{
-		background-color: #dddddd;
-	}
-	</style>
-</head>
-<body>
-	<div id="contenedorPagina">
-		<header id="encabezado">
-			<p>
-				<IMG SRC="">
-				</p>
-			</header>
-			<aside id="aLaIzquierda">
-				<p>#aLaIzquierda</p>
-			</aside>
-			<section id="contenidoPrincipal">
-				<table>
-					<tr>
-						<h2>Tabla Stock</h2>
-					<tr>
-					<tr>
-						<th>Nombre</th>
-						<th>Tipo</th>
-						<th>Precio</th>
-						<th>Stock</th>
-					</tr>
-					<?php
-						$fichero = fopen("bd/stock.csv", "r");
-						while (($line = fgetcsv($fichero)) !== false) 
-						{
-								echo "<tr>";
-								foreach ($line as $cell) 
-								{
-										echo "<td>" . htmlspecialchars($cell) . "</td>";
-								}
-								echo "</tr>\n";
-						}
-						fclose($f);
-					?>
-				</table>
-			</section>
-			<aside id="aLaDerecha">
-				<p>#aLaDerecha</p>
-			</aside>
-			<footer id="piePagina">
-				<p>#piePagina</p>
-			</footer>
-		</div>
-	</body>
+  <body>
+      
+	<h1 style="text-align: center;">Bodegas Torres</h1>
+	<h2>Stocks</h2>
+    <div id='table-container-stock'></div>
+	<h2>Pedidos</h2>
+	<div id='table-container-pedidos'></div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.csv.min.js"></script>
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="js/csv_to_html_table.js"></script>
+
+
+    <script type="text/javascript">
+      function format_link(link){
+        if (link)
+          return "<a href='" + link + "' target='_blank'>" + link + "</a>";
+        else
+          return "";
+      }
+
+      CsvToHtmlTable.init({
+        csv_path: 'bd/stock.csv',
+        element: 'table-container-stock', 
+        allow_download: true,
+        csv_options: {separator: ',', delimiter: '"'},
+        datatables_options: {"paging": false}
+      });
+	  
+	  CsvToHtmlTable.init({
+        csv_path: 'bd/pedidos.csv',
+        element: 'table-container-pedidos', 
+        allow_download: true,
+        csv_options: {separator: ',', delimiter: '"'},
+        datatables_options: {"paging": false}//,
+        //custom_formatting: [[4, format_link]]
+      });
+    </script>
+  </body>
 </html>
