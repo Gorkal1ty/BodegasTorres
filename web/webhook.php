@@ -34,9 +34,9 @@ function obtenerStock($n, $lista)
 	}
 }
 
-function obtenerPrecio($u, $n)			#NO PASO LA LISTA!!!!! POSIBLE ERROR, CHEQUEAR
+function obtenerPrecio($u, $n, $lista)			#NO PASO LA LISTA!!!!! POSIBLE ERROR, CHEQUEAR
 {
-	foreach ($arrayStock as &$Stock)
+	foreach ($lista as &$Stock)
 	{
 		if($Stock->nombre==$n)
 		{
@@ -73,6 +73,7 @@ foreach($arrayStock as &$Stock)
 
 switch ($action) 
 {
+	#--------CONSULTAR STOCK------------ Consulta el Stock para el nuevo pedido
     case 'nuevo.consultarStock':
 		error_log('ACCION = Consultar Stock');
 		#Parametros
@@ -88,7 +89,7 @@ switch ($action)
 		if($stock<=0)
 		{
 			#STOCK VACIO > Proponer Sustituir por Gran Coronas
-			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas por ' . obtenerPrecio($completar, 'Gran Coronas') . '€. ¿Las quiere?';
+			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas por ' . obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€. ¿Las quiere?';
 			$contextout = array(array('name'=>'consultarCambio', 'lifespan'=>2, 'parameters'=>array('vino'=>'Gran Coronas', 'nBotellas'=>$nbotellas)));;
 		}
 		else if ($stock<$nbotellas) 
@@ -100,10 +101,11 @@ switch ($action)
 		else
 		{
 			#STOCK OK
-			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock, a un precio de ' . obtenerPrecio($nbotellas, $vino) . '€ ¿Es ésta su dirección? = ' . $direccion;
+			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock, a un precio de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) . '€ ¿Es ésta su dirección? = ' . $direccion;
 			$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		}
 		break;
+	#--------COMPLETAR PEDIDO------------ Completa un Pedido cuyo Stock no es suficiente con botellas de Gran Coronas
     case 'nuevo.completarPedido':
 	    error_log('ACCION = Completar Pedido');
 		#Parametros
@@ -112,18 +114,20 @@ switch ($action)
 		$nbotellas = $stock;
 		$completar = $parameters['nbotellas'] - $stock;
 
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. El precio totales de ' . obtenerPrecio($nbotellas, $vino) + obtenerPrecio($completar, 'Gran Coronas') . '€ ¿Es ésta su dirección? = ' . $direccion;
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. El precio totales de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) + obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€ ¿Es ésta su dirección? = ' . $direccion;
 		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
 
         break;
+	#-------- CAMBIAR PEDIDO------------ Cambia las botellas del vino cuyo stock es insuficiente por Gran Coronas (recomendación)
 	case 'nuevo.cambiarPedido':
 		error_log('ACCION = Cambiar Pedido');
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas. ¿Es ésta su dirección? = ' . $direccion;
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas a ' . obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€. ¿Es ésta su dirección? = ' . $direccion;
 		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => 0, 'direccion'=>$direccion)));
 		break;
+	#------CONFIRMAR DIRECCION --------- Almacena el pedido (actualiza bbddd) y se despide
 	case 'nuevo.confirmarDireccion':
         error_log('ACCION = Confirmar Direccion');
 		#Parametros
@@ -165,6 +169,18 @@ switch ($action)
 		$outputtext = 'Perfecto, su pedido se ha realizado. Gracias.';
 		
         break;
+	#-------- CONSULTAR PEDIDOS------------ Redacta breve resumen de los pedidos pendientes				PENDIENTE
+	case 'consulta.Pedidos':
+        error_log('ACCION = Confirmar Direccion');
+		
+		
+		break;
+	#-------- CONSULTAR CATALOGO------------ Redacta breve resumen de los vinos con su tipo y precio	PENDIENTE
+	case 'consulta.Catalogo'
+		error_log('ACCION = Confirmar Direccion');
+		
+		
+		break;
 }
 
 $source = 'bodegastorres.php';
