@@ -34,6 +34,17 @@ function obtenerStock($n, $lista)
 	}
 }
 
+function obtenerPrecio($u, $n)			#NO PASO LA LISTA!!!!! POSIBLE ERROR, CHEQUEAR
+{
+	foreach ($arrayStock as &$Stock)
+	{
+		if($Stock->nombre==$n)
+		{
+			return $Stock->precio * $u;
+		}
+	}
+}
+
 #Parametros Ficticios (BD)
 $direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
 
@@ -77,7 +88,7 @@ switch ($action)
 		if($stock<=0)
 		{
 			#STOCK VACIO > Proponer Sustituir por Gran Coronas
-			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas, ¿Las quiere?';
+			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas por ' . obtenerPrecio($completar, 'Gran Coronas') . '€. ¿Las quiere?';
 			$contextout = array(array('name'=>'consultarCambio', 'lifespan'=>2, 'parameters'=>array('vino'=>'Gran Coronas', 'nBotellas'=>$nbotellas)));;
 		}
 		else if ($stock<$nbotellas) 
@@ -89,7 +100,7 @@ switch ($action)
 		else
 		{
 			#STOCK OK
-			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock. ¿Es ésta su dirección? = ' . $direccion;
+			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock, a un precio de ' . obtenerPrecio($nbotellas, $vino) . '€ ¿Es ésta su dirección? = ' . $direccion;
 			$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
 		}
 		break;
@@ -101,7 +112,7 @@ switch ($action)
 		$nbotellas = $stock;
 		$completar = $parameters['nbotellas'] - $stock;
 
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. ¿Es ésta su dirección? = ' . $direccion;
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. El precio totales de ' . obtenerPrecio($nbotellas, $vino) + obtenerPrecio($completar, 'Gran Coronas') . '€ ¿Es ésta su dirección? = ' . $direccion;
 		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
 
         break;
