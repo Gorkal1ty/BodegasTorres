@@ -147,9 +147,11 @@ switch ($action)
 		
 		#Actualizar CSV
 		actualizarCSV($arrayStock);
-
-		#comprobar de nuevo
+		#Comprobar de Nuevo
 		mostrarCSV();
+		
+		#Mensaje (Text Response automático de API.AI no se envía en Twitter)
+		$outputtext = 'Perfecto, su pedido se ha realizado. Gracias.';
 		
         break;
 }
