@@ -61,19 +61,19 @@
 	
 	table 
 	{
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
 	}
 	td, th 
 	{
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
 	}
 	tr:nth-child(even) 
 	{
-    background-color: #dddddd;
+		background-color: #dddddd;
 	}
 	</style>
 </head>
@@ -89,65 +89,27 @@
 			</aside>
 			<section id="contenidoPrincipal">
 				<table>
-					<tr id="tituloTabla">
+					<tr>
 						<h2>Tabla Stock</h2>
 					<tr>
 					<tr>
-						<th>Company</th>
-						<th>Contact</th>
-						<th>Country</th>
+						<th>Nombre</th>
+						<th>Tipo</th>
+						<th>Precio</th>
+						<th>Stock</th>
 					</tr>
 					<?php
-					#Constantes
-					$BDstock = 'bd/stock.csv';
-					$BDpedidos = 'bd/pedidos.csv';
-					#Clase
-					class Stock
-					{
-						public $nombre;
-						public $tipo;
-						public $precio;
-						public $stock;		
-						
-						public function __construct($n, $t, $p, $s)
+						$fichero = fopen("bd/stock.csv", "r");
+						while (($line = fgetcsv($fichero)) !== false) 
 						{
-							$this->nombre = $n;
-							$this->tipo = $t;
-							$this->precio = $p;
-							$this->stock = $s;
+								echo "<tr>";
+								foreach ($line as $cell) 
+								{
+										echo "<td>" . htmlspecialchars($cell) . "</td>";
+								}
+								echo "</tr>\n";
 						}
-					}
-
-					function obtenerStock($n, $lista)
-					{
-						foreach ($lista as &$Stock)
-						{
-							if($Stock->nombre==$n)
-							{
-								return $Stock->stock;
-							}
-						}
-					}
-					#Obtener CSV Stock
-					if (($fichero = fopen($BDstock, "r")) !== FALSE) 
-					{
-						while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
-						{
-							$arrayStock[] = new Stock($data[0], $data[1], $data[2], $data[3]);
-						}
-						fclose($fichero);
-					}
-					
-					foreach($arrayStock as &$Stock)
-					{
-					?>
-					<tr>
-						<td>Company</td>
-						<td>Contact</td>
-						<td>Country</td>
-					</tr>
-					<?php 
-					} 
+						fclose($f);
 					?>
 				</table>
 			</section>
