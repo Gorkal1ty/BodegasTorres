@@ -3,8 +3,8 @@ header('Content-Type: application/json');
 ob_start();
 
 #Constantes
-$VINOS = 5;
-$CSV = 'stock.csv';
+$STOCK = 'bd/stock.csv';
+$PEDIDOS = 'bd/pedidos.csv';
 
 #Clase Stock
 class Stock
@@ -44,7 +44,7 @@ $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
 #Obtener CSV Stock
-if (($fichero = fopen($CSV, "r")) !== FALSE) 
+if (($fichero = fopen($STOCK, "r")) !== FALSE) 
 {
 	while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
 	{
@@ -171,9 +171,9 @@ echo json_encode($output);
 function actualizarCSV($array)
 {
 	error_log('ACTUALIZANDO STOCK');
-	global $CSV;
+	global $STOCK;
 	
-	$fichero = fopen($CSV, 'w');
+	$fichero = fopen($STOCK, 'w');
 	foreach($array as &$Stock)
 	{
 		#Conversión de Objeto (Stock) a Array
@@ -185,8 +185,8 @@ function actualizarCSV($array)
 
 function mostrarCSV()
 {
-	global $CSV;
-	if (($fichero = fopen($CSV, "r")) !== FALSE) 
+	global $STOCK;
+	if (($fichero = fopen($STOCK, "r")) !== FALSE) 
 	{
 		while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
 		{
