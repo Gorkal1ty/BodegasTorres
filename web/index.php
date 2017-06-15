@@ -74,7 +74,7 @@ switch ($action)
 		error_log($stock . ' botellas en stock');
 		
 		#Consultar Stock
-		if($stock==0)
+		if($stock<=0)
 		{
 			#STOCK VACIO > Proponer Sustituir por Gran Coronas
 			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas, ¿Las quiere?';
