@@ -199,8 +199,8 @@ switch ($action)
 		$arrayPedidos[] = new Pedido($USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA, 'EN PREPARACION');
 		
 		#Actualizar CSVs
-		actualizarStock();
-		actualizarPedidos();
+		actualizarStock($arrayStock);
+		actualizarPedidos($arrayPedidos);
 		
 		#Comprobar de Nuevo
 		mostrarCSV();
@@ -256,11 +256,11 @@ ob_end_clean();
 echo json_encode($output);
 
 
-function actualizarStock()
+function actualizarStock($array)
 {
 	error_log('ACTUALIZANDO CSV');
 	$fichero = fopen($BDstock, 'w');
-	foreach($arrayStock as &$Stock)
+	foreach($array as &$Stock)
 	{
 		#Conversión de Objeto (Stock) a Array
 		$fila = (array)$Stock;
@@ -269,11 +269,11 @@ function actualizarStock()
 	fclose($fichero);
 }
 
-function actualizarPedidos()
+function actualizarPedidos($array)
 {
 	error_log('ACTUALIZANDO CSV');
 	$fichero = fopen($BDpedidos, 'w');
-	foreach($arrayPedidos as &$Pedido)
+	foreach($array as &$Pedido)
 	{
 		#Conversión de Objeto (Stock) a Array
 		$fila = (array)$Pedido;
