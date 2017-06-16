@@ -258,7 +258,8 @@ echo json_encode($output);
 
 function actualizarStock($array)
 {
-	error_log('ACTUALIZANDO CSV');
+	global $BDstock;
+	error_log('ACTUALIZANDO STOCK');
 	$fichero = fopen($BDstock, 'w');
 	foreach($array as &$Stock)
 	{
@@ -271,7 +272,8 @@ function actualizarStock($array)
 
 function actualizarPedidos($array)
 {
-	error_log('ACTUALIZANDO CSV');
+	global $BDpedidos;
+	error_log('ACTUALIZANDO PEDIDOS');
 	$fichero = fopen($BDpedidos, 'w');
 	foreach($array as &$Pedido)
 	{
