@@ -6,6 +6,8 @@ ob_start();
 $BDstock = 'bd/stock.csv';
 $BDpedidos = 'bd/pedidos.csv';
 
+$FECHA_ENTREGA = '26/06/2017';			#Fecha estimada de entrega (MODIFICAR EN FUTURO)
+
 #Clase Stock
 class Stock
 {
@@ -34,7 +36,7 @@ function obtenerStock($n, $lista)
 	}
 }
 
-function obtenerPrecio($u, $n, $lista)			#NO PASO LA LISTA!!!!! POSIBLE ERROR, CHEQUEAR
+function obtenerPrecio($u, $n, $lista)
 {
 	foreach ($lista as &$Stock)
 	{
@@ -44,9 +46,6 @@ function obtenerPrecio($u, $n, $lista)			#NO PASO LA LISTA!!!!! POSIBLE ERROR, C
 		}
 	}
 }
-
-#Parametros Ficticios (BD)
-$direccion = 'C/Luis Jorge Castaños, 23, 4º Dcha. 28999 Valdecillas de Jarama, Madrid';
 
 #Obtener Info. Peticion
 $json = file_get_contents('php://input'); 
@@ -63,6 +62,15 @@ if (($fichero = fopen($BDstock, "r")) !== FALSE)
 	}
 	fclose($fichero);
 }
+#Obtener CSV Pedidos
+if (($fichero = fopen($BDpedidos, "r")) !== FALSE) 
+{
+	while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
+	{
+		$arrayPedidos[] = new Stock($data[0], $data[1], $data[2], $data[3]);
+	}
+	fclose($fichero);
+}
 
 #LOG Stock
 error_log("STOCK");
@@ -75,7 +83,7 @@ switch ($action)
 {
 	#--------CONSULTAR STOCK------------ Consulta el Stock para el nuevo pedido
     case 'nuevo.consultarStock':
-		error_log('ACCION = Consultar Stock');
+		error_log('ACCION = CONSULTAR STOCK');
 		#Parametros
 		$vino = $parameters['vino'];
 		$stock = obtenerStock($vino, $arrayStock);
@@ -89,52 +97,53 @@ switch ($action)
 		if($stock<=0)
 		{
 			#STOCK VACIO > Proponer Sustituir por Gran Coronas
-			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas por ' . obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€. ¿Las quiere?';
-			$contextout = array(array('name'=>'consultarCambio', 'lifespan'=>2, 'parameters'=>array('vino'=>'Gran Coronas', 'nBotellas'=>$nbotellas)));;
+			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas y tu precio sería de ' . obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€. ¿Las quieres?';
+			$contextout = array(array('name'=>'consultarCambio', 'lifespan'=>2, 'parameters'=>array('vino'=>'Gran Coronas', 'nBotellas'=>$nbotellas)));
 		}
 		else if ($stock<$nbotellas) 
 		{
 			#STOCK INSUFICIENTE > Completar Pedido o Sustituir por Gran Coronas
-			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock . ' existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Puede completar el pedido con ' . ($nbotellas - $stock) . ' unidades o sustituirlo por completo con ' . $nbotellas . ' botellas.';
-			$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));;
+			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock . ' existencias de ' . $vino . '. Te recomendamos un vino similar como es el Gran Coronas. Puedes COPMLETAR el pedido con ' . ($nbotellas - $stock) . ' unidades o SUSTITUIRLO con ' . $nbotellas . ' botellas.';
+			$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));
 		} 
 		else
 		{
 			#STOCK OK
-			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock, a un precio de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) . '€ ¿Es ésta su dirección? = ' . $direccion;
-			$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'direccion'=>$direccion)));
+			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock. Tu precio será de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) . '€ ¿Estás de acuerdo?';
+			$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));
 		}
 		break;
+		
 	#--------COMPLETAR PEDIDO------------ Completa un Pedido cuyo Stock no es suficiente con botellas de Gran Coronas
     case 'nuevo.completarPedido':
-	    error_log('ACCION = Completar Pedido');
+	    error_log('ACCION = COMPLETAR PEDIDO');
 		#Parametros
 		$vino = $parameters['vino'];
 		$stock = obtenerStock($vino, $arrayStock);
 		$nbotellas = $stock;
 		$completar = $parameters['nbotellas'] - $stock;
-
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. El precio totales de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) + obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€ ¿Es ésta su dirección? = ' . $direccion;
-		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'direccion'=>$direccion)));
-
+		
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. Tu precio total es de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) + obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€ ¿Estás de acuerdo?';
+		$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar)));
         break;
+		
 	#-------- CAMBIAR PEDIDO------------ Cambia las botellas del vino cuyo stock es insuficiente por Gran Coronas (recomendación)
 	case 'nuevo.cambiarPedido':
-		error_log('ACCION = Cambiar Pedido');
+		error_log('ACCION = CAMBIAR PEDIDO');
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas a ' . obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€. ¿Es ésta su dirección? = ' . $direccion;
-		$contextout = array(array('name'=>'consultaDireccion', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => 0, 'direccion'=>$direccion)));
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas y tu precio queda en ' . obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€. ¿Todo bien?';
+		$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => 0)));
 		break;
+		
 	#------CONFIRMAR DIRECCION --------- Almacena el pedido (actualiza bbddd) y se despide
-	case 'nuevo.confirmarDireccion':
-        error_log('ACCION = Confirmar Direccion');
+	case 'nuevo.confirmarPedido':
+        error_log('ACCION = CONFIRMAR PEDIDO');
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
 		$completar = $parameters['completar'];
-		$direccion = $parameters['direccion'];
 		
 		#Almacenar Pedido
 		error_log($vino . ' = ' . $nbotellas . ' unidades');
@@ -142,7 +151,6 @@ switch ($action)
 		{
 			error_log('Gran Coronas = ' . $completar . ' unidades');
 		}
-		error_log('Dirección = ' . $direccion);
 		
 		#Actualizar Array
 		foreach ($arrayStock as $Stock)
@@ -160,24 +168,27 @@ switch ($action)
 			}
 		}
 		
-		#Actualizar CSV
-		actualizarCSV($arrayStock);
+		#Actualizar CSVs
+		actualizarCSV($BDstock, $arrayStock);
+		actualizarCSV($BDpedidos, $arrayPedidos);
+		
 		#Comprobar de Nuevo
 		mostrarCSV();
 		
-		#Mensaje (Text Response automático de API.AI no se envía en Twitter)
-		$outputtext = 'Perfecto, su pedido se ha realizado. Gracias.';
-		
+		#Mensaje (Text Response automático de API.AI no se envía en Twitter ¿?)
+		$outputtext = 'Perfecto, hemos registrado tu pedido. Llegará el ' . $FECHA_ENTREGA . '. Gracias.';
         break;
+		
 	#-------- CONSULTAR PEDIDOS------------ Redacta breve resumen de los pedidos pendientes				PENDIENTE
 	case 'consulta.Pedidos':
-        error_log('ACCION = Confirmar Direccion');
+        error_log('ACCION = CONSULTAR PEDIDOS');
 		
-		
+
 		break;
+		
 	#-------- CONSULTAR CATALOGO------------ Redacta breve resumen de los vinos con su tipo y precio	PENDIENTE
 	case 'consulta.Catalogo':
-		error_log('ACCION = Confirmar Direccion');
+		error_log('ACCION = CONSULTAR CATALOGO');
 		
 		
 		break;
@@ -195,12 +206,10 @@ ob_end_clean();
 echo json_encode($output);
 
 
-function actualizarCSV($array)
+function actualizarCSV($csv, $array)
 {
-	error_log('ACTUALIZANDO STOCK');
-	global $BDstock;
-	
-	$fichero = fopen($BDstock, 'w');
+	error_log('ACTUALIZANDO CSV');
+	$fichero = fopen($csv, 'w');
 	foreach($array as &$Stock)
 	{
 		#Conversión de Objeto (Stock) a Array
@@ -213,11 +222,22 @@ function actualizarCSV($array)
 function mostrarCSV()
 {
 	global $BDstock;
+	global $BDpedidos;
+	error_log("TABLA STOCK");
 	if (($fichero = fopen($BDstock, "r")) !== FALSE) 
 	{
 		while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
 		{
-			error_log($data[0] . " -- " . $data[1] . " -- " . $data[2] . " -- " . $data[3]);
+			error_log($data[0] . "(" . $data[1] . ") = " . $data[2] . "€ - " . $data[3] . 'u');
+		}
+		fclose($fichero);
+	}
+	error_log("TABLA PEDIDOS");
+	if (($fichero = fopen($BDpedidos, "r")) !== FALSE) 
+	{
+		while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
+		{
+			error_log($data[0] . " = " . $data[1] . " = " . $data[2] . "u + " . $data[3] . ' = ' . $data[4] . '€ --> ' . $data[5]);
 		}
 		fclose($fichero);
 	}
