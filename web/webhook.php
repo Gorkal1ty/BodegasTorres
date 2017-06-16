@@ -226,7 +226,7 @@ switch ($action)
 		#Mostrar
 		if($contPedidos>0)
 		{
-			$outputtext = 'Entendido, aquí tienes los detalles:\n';
+			$outputtext = 'Entendido, aquí tienes los detalles: ';
 			$outputtext .= $infoPedidos;
 		}
 		else
