@@ -90,7 +90,7 @@ if (($fichero = fopen($BDpedidos, "r")) !== FALSE)
 {
 	while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
 	{
-		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3]);
+		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
 	}
 	fclose($fichero);
 }
