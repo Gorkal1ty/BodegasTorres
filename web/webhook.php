@@ -244,11 +244,11 @@ switch ($action)
 		{
 			if($Stock->stock>0)
 			{
-				$infoCatalogo .= $Stock->nombre . '(' . $Stock->tipo . ') = ' . $Stock->precio . '  ||  ';  #SALTO LINEA?!?!?!?!?!
+				$infoCatalogo .= $Stock->nombre . '(' . $Stock->tipo . ') = ' . $Stock->precio . '€    ||    ';  #SALTO LINEA?!?!?!?!?!
 			}
 		}
 		#Mostrar
-		$outputtext = 'Puede pedir alguno de nuestros vinos más exitosos: ';
+		$outputtext = 'Puedes pedir alguno de nuestros vinos más exitosos: ';
 		$outputtext .= $infoCatalogo;
 		break;
 }
