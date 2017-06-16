@@ -77,18 +77,18 @@ $action = $request['result']['action'];
 $parameters = $request['result']['parameters'];
 
 #Obtener CSV Stock
-if (($fichero = fopen($BDstock, "r")) !== FALSE) 
+if (($fichero = fopen($BDstock, 'r')) !== FALSE) 
 {
-	while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
+	while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
 	{
 		$arrayStock[] = new Stock($data[0], $data[1], $data[2], $data[3]);
 	}
 	fclose($fichero);
 }
 #Obtener CSV Pedidos
-if (($fichero = fopen($BDpedidos, "r")) !== FALSE) 
+if (($fichero = fopen($BDpedidos, 'r')) !== FALSE) 
 {
-	while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
+	while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
 	{
 		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
 	}
@@ -96,7 +96,7 @@ if (($fichero = fopen($BDpedidos, "r")) !== FALSE)
 }
 
 #LOG Stock
-error_log("STOCK");
+error_log('STOCK');
 foreach($arrayStock as &$Stock)
 {
 	error_log($Stock->nombre . ' (' . $Stock->tipo . ') = ' . $Stock->precio . '€ - ' . $Stock->stock . ' en Stock');
@@ -219,7 +219,7 @@ switch ($action)
 			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
-				$infoPedidos = ' - ' . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . ' --> ' . $Pedido->estado . '\n';
+				$infoPedidos = ' - ' . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . '\n';
 				$contPedidos++;
 			}
 		}
@@ -273,21 +273,21 @@ function mostrarCSV()
 {
 	global $BDstock;
 	global $BDpedidos;
-	error_log("TABLA STOCK");
-	if (($fichero = fopen($BDstock, "r")) !== FALSE) 
+	error_log('TABLA STOCK');
+	if (($fichero = fopen($BDstock, 'r')) !== FALSE) 
 	{
-		while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
+		while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
 		{
-			error_log($data[0] . "(" . $data[1] . ") = " . $data[2] . "€ - " . $data[3] . 'u');
+			error_log($data[0] . '(' . $data[1] . ') = ' . $data[2] . '€ - ' . $data[3] . 'u');
 		}
 		fclose($fichero);
 	}
-	error_log("TABLA PEDIDOS");
-	if (($fichero = fopen($BDpedidos, "r")) !== FALSE) 
+	error_log('TABLA PEDIDOS');
+	if (($fichero = fopen($BDpedidos, 'r')) !== FALSE) 
 	{
-		while (($data = fgetcsv($fichero, 1000, ",")) !== FALSE) 
+		while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
 		{
-			error_log($data[0] . " = " . $data[1] . " = " . $data[2] . "u + " . $data[3] . ' = ' . $data[4] . '€ --> ' . $data[5]);
+			error_log($data[0] . ' = ' . $data[1] . ' = ' . $data[2] . 'u + ' . $data[3] . ' = ' . $data[4] . '€ --> ' . $data[5]);
 		}
 		fclose($fichero);
 	}
