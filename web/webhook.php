@@ -219,14 +219,14 @@ switch ($action)
 			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
-				$infoPedidos .= $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . '               ';#SALTO LINEA?!?!?!?!?!
+				$infoPedidos .= $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' (' . $Pedido->fecha_entrega . ')               ';#SALTO LINEA?!?!?!?!?!
 				$contPedidos++;
 			}
 		}
 		#Mostrar
 		if($contPedidos>0)
 		{
-			$outputtext = 'Entendido, aquí tienes los detalles: ';
+			$outputtext = 'Aquí tienes los detalles: ';
 			$outputtext .= $infoPedidos;
 		}
 		else
