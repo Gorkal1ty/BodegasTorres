@@ -219,7 +219,7 @@ switch ($action)
 			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
-				$infoPedidos. = $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . '               ';  #SALTO LINEA?!?!?!?!?!
+				$infoPedidos .= $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . '               ';#SALTO LINEA?!?!?!?!?!
 				$contPedidos++;
 			}
 		}
@@ -244,7 +244,7 @@ switch ($action)
 		{
 			if($Stock->stock>0)
 			{
-				$infoCatalogo. = $Stock->vino . '(' . $Stock->tipo . ') = ' . $Stock->precio . '  ||  ';  #SALTO LINEA?!?!?!?!?!
+				$infoCatalogo .= $Stock->vino . '(' . $Stock->tipo . ') = ' . $Stock->precio . '  ||  ';  #SALTO LINEA?!?!?!?!?!
 			}
 		}
 		#Mostrar
