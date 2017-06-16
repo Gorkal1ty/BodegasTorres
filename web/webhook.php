@@ -216,7 +216,6 @@ switch ($action)
 		$contPedidos=0;
 		foreach ($arrayPedidos as $Pedido)
 		{
-			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
 				$infoPedidos .= $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' (' . $Pedido->fecha_entrega . ')               ';#SALTO LINEA?!?!?!?!?!
