@@ -244,7 +244,7 @@ switch ($action)
 		{
 			if($Stock->stock>0)
 			{
-				$infoCatalogo .= $Stock->vino . '(' . $Stock->tipo . ') = ' . $Stock->precio . '  ||  ';  #SALTO LINEA?!?!?!?!?!
+				$infoCatalogo .= $Stock->nombre . '(' . $Stock->tipo . ') = ' . $Stock->precio . '  ||  ';  #SALTO LINEA?!?!?!?!?!
 			}
 		}
 		#Mostrar

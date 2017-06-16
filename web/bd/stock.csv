@@ -1,6 +1,8 @@
 NOMBRE,TIPO,PRECIO,STOCK
-Celeste,1,15,10
-Viña Esmeralda,1,6,10
-Gran Coronas,1,12,10
-Viña Sol,1,10,10
-Mas La Plana,1,50,10
+Celeste,Tinto,15,20
+Viña Esmeralda,Rosado,8,30
+Gran Coronas,Tinto,15,30
+Mas La Plana,Tinto,80,5
+Altos Ibericos,Tinto,6,30
+Gran Viña Sol,Blanco,12,20
+Milmanda,Blanco,55,10
