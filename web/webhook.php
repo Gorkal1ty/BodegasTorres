@@ -219,7 +219,7 @@ switch ($action)
 			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
-				$infoPedidos = ' - ' . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . '\n';
+				$infoPedidos = ' - ' . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' ';
 				$contPedidos++;
 			}
 		}
