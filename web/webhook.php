@@ -48,7 +48,7 @@ function obtenerPrecio($u, $n, $lista)
 }
 
 #Clase Pedido
-class Stock
+class Pedido
 {
 	public $usuario;
 	public $vino;
@@ -216,6 +216,7 @@ switch ($action)
 		$contPedidos=0;
 		foreach ($arrayPedidos as $Pedido)
 		{
+			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
 				$infoPedidos = ' - ' . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . ' --> ' . $Pedido->estado . '\n';
