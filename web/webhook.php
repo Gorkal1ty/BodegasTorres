@@ -196,7 +196,7 @@ switch ($action)
 		}
 		
 		#Actualizar Array Pedidos
-		$arrayPedidos = new Pedido($USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA);
+		$arrayPedidos = new Pedido($USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA, 'EN PREPARACION');
 		
 		#Actualizar CSVs
 		actualizarCSV($BDstock, $arrayStock);
@@ -219,7 +219,7 @@ switch ($action)
 			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
-				$infoPedidos = ' - ' . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' ';
+				$infoPedidos = $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' ';
 				$contPedidos++;
 			}
 		}
