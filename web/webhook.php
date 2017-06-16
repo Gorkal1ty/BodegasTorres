@@ -7,6 +7,7 @@ $BDstock = 'bd/stock.csv';
 $BDpedidos = 'bd/pedidos.csv';
 
 $FECHA_ENTREGA = '26/06/2017';			#Fecha estimada de entrega (MODIFICAR EN FUTURO)
+$USUARIO = 'NTS';
 
 #Clase Stock
 class Stock
@@ -24,7 +25,7 @@ class Stock
 		$this->stock = $s;
     }
 }
-
+#Funciones Stock
 function obtenerStock($n, $lista)
 {
 	foreach ($lista as &$Stock)
@@ -35,7 +36,6 @@ function obtenerStock($n, $lista)
 		}
 	}
 }
-
 function obtenerPrecio($u, $n, $lista)
 {
 	foreach ($lista as &$Stock)
@@ -45,6 +45,29 @@ function obtenerPrecio($u, $n, $lista)
 			return $Stock->precio * $u;
 		}
 	}
+}
+
+#Clase Pedido
+class Stock
+{
+	public $usuario;
+	public $vino;
+	public $unidades;
+	public $completado;			#VARIABLE DEMO (GRAN CORONAS)
+	public $coste;
+	public $fecha_entrega;
+	public $estado;
+	
+	public function __construct($u, $v, $uni, $comp, $cost, $f, $e)
+	{
+        $this->usuario = $u;
+		$this->vino = $v;
+		$this->unidades = $uni;
+		$this->completado = $comp;
+		$this->coste = $cost;
+		$this->fecha_entrega = $f;
+		$this->estado = $e;
+    }
 }
 
 #Obtener Info. Peticion
@@ -103,14 +126,15 @@ switch ($action)
 		else if ($stock<$nbotellas) 
 		{
 			#STOCK INSUFICIENTE > Completar Pedido o Sustituir por Gran Coronas
-			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock . ' existencias de ' . $vino . '. Te recomendamos un vino similar como es el Gran Coronas. Puedes COPMLETAR el pedido con ' . ($nbotellas - $stock) . ' unidades o SUSTITUIRLO con ' . $nbotellas . ' botellas.';
+			$outputtext = 'Lo sentimos pero solamente nos quedan ' . $stock . ' existencias de ' . $vino . '. Te recomendamos un vino similar como es el Gran Coronas. Puedes COMPLETAR el pedido con ' . ($nbotellas - $stock) . ' unidades o SUSTITUIRLO con ' . $nbotellas . ' botellas.';
 			$contextout = array(array('name'=>'consultarAlternativa', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));
 		} 
 		else
 		{
+			$coste = obtenerPrecio($nbotellas, $vino, $arrayStock);
 			#STOCK OK
-			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock. Tu precio será de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) . '€ ¿Estás de acuerdo?';
-			$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas)));
+			$outputtext = 'Perfecto, tenemos las ' . $nbotellas . ' botellas de ' . $vino . ' en stock. Tu precio será de ' . $coste . '€ ¿Estás de acuerdo?';
+			$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'coste' => $coste)));
 		}
 		break;
 		
@@ -122,9 +146,10 @@ switch ($action)
 		$stock = obtenerStock($vino, $arrayStock);
 		$nbotellas = $stock;
 		$completar = $parameters['nbotellas'] - $stock;
+		$coste = obtenerPrecio($nbotellas, $vino, $arrayStock) + obtenerPrecio($completar, 'Gran Coronas', $arrayStock);
 		
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. Tu precio total es de ' . obtenerPrecio($nbotellas, $vino, $arrayStock) + obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€ ¿Estás de acuerdo?';
-		$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar)));
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de ' . $vino . ' junto con ' . $completar . ' de Gran Coronas. Tu precio total es de ' . $coste . '€ ¿Estás de acuerdo?';
+		$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => $completar, 'coste' => $coste)));
         break;
 		
 	#-------- CAMBIAR PEDIDO------------ Cambia las botellas del vino cuyo stock es insuficiente por Gran Coronas (recomendación)
@@ -133,26 +158,28 @@ switch ($action)
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
-		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas y tu precio queda en ' . obtenerPrecio($completar, 'Gran Coronas', $arrayStock) . '€. ¿Todo bien?';
-		$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => 0)));
+		$coste = obtenerPrecio($completar, 'Gran Coronas', $arrayStock);
+		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas y tu precio queda en ' . $coste . '€. ¿Todo bien?';
+		$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => 0, 'coste' => $coste)));
 		break;
 		
-	#------CONFIRMAR DIRECCION --------- Almacena el pedido (actualiza bbddd) y se despide
+	#------CONFIRMAR PEDIDO --------- Almacena el pedido (actualiza bbddd), muestra fecha entrega y se despide
 	case 'nuevo.confirmarPedido':
         error_log('ACCION = CONFIRMAR PEDIDO');
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
 		$completar = $parameters['completar'];
+		$coste = $parameters['coste'];
 		
-		#Almacenar Pedido
+		#LOG
 		error_log($vino . ' = ' . $nbotellas . ' unidades');
 		if($completar!=0)
 		{
 			error_log('Gran Coronas = ' . $completar . ' unidades');
 		}
 		
-		#Actualizar Array
+		#Actualizar Array Stock
 		foreach ($arrayStock as $Stock)
 		{
 			if($Stock->nombre==$vino)
@@ -168,6 +195,9 @@ switch ($action)
 			}
 		}
 		
+		#Actualizar Array Pedidos
+		$arrayPedidos = new Pedido($USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA);
+		
 		#Actualizar CSVs
 		actualizarCSV($BDstock, $arrayStock);
 		actualizarCSV($BDpedidos, $arrayPedidos);
@@ -176,13 +206,32 @@ switch ($action)
 		mostrarCSV();
 		
 		#Mensaje (Text Response automático de API.AI no se envía en Twitter ¿?)
-		$outputtext = 'Perfecto, hemos registrado tu pedido. Llegará el ' . $FECHA_ENTREGA . '. Gracias.';
+		$outputtext = 'Perfecto, hemos registrado tu pedido. Llegará el ' . $FECHA_ENTREGA . '. Puedes consultarnos su estado cuando quieras. ¡Gracias!';
         break;
 		
 	#-------- CONSULTAR PEDIDOS------------ Redacta breve resumen de los pedidos pendientes				PENDIENTE
 	case 'consulta.Pedidos':
         error_log('ACCION = CONSULTAR PEDIDOS');
-		
+		#Listar Pedidos
+		$contPedidos=0;
+		foreach ($arrayPedidos as $Pedido)
+		{
+			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
+			{
+				$infoPedidos = ' - ' . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . ' --> ' . $Pedido->estado . '\n';
+				$contPedidos++;
+			}
+		}
+		#Mostrar
+		if($contPedidos>0)
+		{
+			$outputtext = 'Entendido, aquí tienes los detalles:\n';
+			$outputtext .= $infoPedidos;
+		}
+		else
+		{
+			$outputtext = 'No parece que tengas ningún pedido pendiente. Si no has recibido un envío, por favor ponte en contacto con nosotros en ...';
+		}
 
 		break;
 		
