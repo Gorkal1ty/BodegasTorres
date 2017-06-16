@@ -206,10 +206,10 @@ switch ($action)
 		mostrarCSV();
 		
 		#Mensaje (Text Response automático de API.AI no se envía en Twitter ¿?)
-		$outputtext = 'Perfecto, hemos registrado tu pedido. Llegará el ' . $FECHA_ENTREGA . '. Puedes consultarnos su estado cuando quieras. ¡Gracias!';
+		$outputtext = 'Hecho, hemos registrado tu pedido. Llegará el ' . $FECHA_ENTREGA . '. Puedes consultarnos su estado cuando quieras. ¡Gracias!';
         break;
 		
-	#-------- CONSULTAR PEDIDOS------------ Redacta breve resumen de los pedidos pendientes				PENDIENTE
+	#-------- CONSULTAR PEDIDOS------------ Redacta breve resumen de los pedidos pendientes				
 	case 'consulta.Pedidos':
         error_log('ACCION = CONSULTAR PEDIDOS');
 		#Listar Pedidos
@@ -219,7 +219,7 @@ switch ($action)
 			
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
-				$infoPedidos = $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' ';
+				$infoPedidos. = $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . '               ';  #SALTO LINEA?!?!?!?!?!
 				$contPedidos++;
 			}
 		}
@@ -236,11 +236,20 @@ switch ($action)
 
 		break;
 		
-	#-------- CONSULTAR CATALOGO------------ Redacta breve resumen de los vinos con su tipo y precio	PENDIENTE
+	#-------- CONSULTAR CATALOGO------------ Redacta breve resumen de los vinos con su tipo y precio	
 	case 'consulta.Catalogo':
 		error_log('ACCION = CONSULTAR CATALOGO');
-		
-		
+		#Listar Vinos
+		foreach ($arrayStock as $Stock)
+		{
+			if($Stock->stock>0)
+			{
+				$infoCatalogo. = $Stock->vino . '(' . $Stock->tipo . ') = ' . $Stock->precio . '  ||  ';  #SALTO LINEA?!?!?!?!?!
+			}
+		}
+		#Mostrar
+		$outputtext = 'Puede pedir alguno de nuestros vinos más exitosos: ';
+		$outputtext .= $infoCatalogo;
 		break;
 }
 
