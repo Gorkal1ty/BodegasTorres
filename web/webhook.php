@@ -50,6 +50,7 @@ function obtenerPrecio($u, $n, $lista)
 #Clase Pedido
 class Pedido
 {
+	public $npedido;
 	public $usuario;
 	public $vino;
 	public $unidades;
@@ -58,8 +59,9 @@ class Pedido
 	public $fecha_entrega;
 	public $estado;
 	
-	public function __construct($u, $v, $uni, $comp, $cost, $f, $e)
+	public function __construct($n, $u, $v, $uni, $comp, $cost, $f, $e)
 	{
+		$this->npedido = $n;
         $this->usuario = $u;
 		$this->vino = $v;
 		$this->unidades = $uni;
@@ -90,7 +92,7 @@ if (($fichero = fopen($BDpedidos, 'r')) !== FALSE)
 {
 	while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
 	{
-		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
+		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
 	}
 	fclose($fichero);
 }
@@ -195,8 +197,11 @@ switch ($action)
 			}
 		}
 		
+		#Referencia
+		$nPedido = (string)intval(rand(0,1) . rand(1,9) . rand(0,2) . rand(1,9) . rand(0,9));
+		
 		#Actualizar Array Pedidos
-		$arrayPedidos[] = new Pedido($USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA, 'EN PREPARACION');
+		$arrayPedidos[] = new Pedido($nPedido, $USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA, 'EN PREPARACION');
 		
 		#Actualizar CSVs
 		actualizarStock($arrayStock);
@@ -218,7 +223,7 @@ switch ($action)
 		{
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
-				$infoPedidos .= $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' (' . $Pedido->fecha_entrega . ')               ';#SALTO LINEA?!?!?!?!?!
+				$infoPedidos .= $Pedido->npedido . ": " . $Pedido->unidades . ' x ' . $Pedido->vino . ' = ' . $Pedido->coste . '€ --> ' . $Pedido->estado . ' (' . $Pedido->fecha_entrega . ')               ';#SALTO LINEA?!?!?!?!?!
 				$contPedidos++;
 			}
 		}
@@ -247,8 +252,9 @@ switch ($action)
 			}
 		}
 		#Mostrar
-		$outputtext = 'Puedes pedir alguno de nuestros vinos más exitosos: ';
+		$outputtext = 'Éste es tu catálogo: ';
 		$outputtext .= $infoCatalogo;
+		$outputtext .= '    ||    Más info. en http://shop.torres.es/es/vinos';
 		break;
 }
 
