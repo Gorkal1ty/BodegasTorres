@@ -9,7 +9,7 @@ $BDpedidos = 'bd/pedidos.csv';
 date_default_timezone_set('Africa/Nairobi');
 
 $date = 
-$FECHA_ENTREGA = date('d-m-Y');			#Fecha estimada de entrega (+7 días)
+$FECHA_ENTREGA = date('d+10/m/Y');			#Fecha estimada de entrega (+7 días)
 $USUARIO = 'NTS';
 
 #Clase Stock
