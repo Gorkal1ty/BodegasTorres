@@ -6,7 +6,10 @@ ob_start();
 $BDstock = 'bd/stock.csv';
 $BDpedidos = 'bd/pedidos.csv';
 
-$FECHA_ENTREGA = '26/06/2017';			#Fecha estimada de entrega (MODIFICAR EN FUTURO)
+date_default_timezone_set('Africa/Nairobi');
+
+$date = 
+$FECHA_ENTREGA = date('d-m-Y');			#Fecha estimada de entrega (+7 días)
 $USUARIO = 'NTS';
 
 #Clase Stock
@@ -211,7 +214,7 @@ switch ($action)
 		mostrarCSV();
 		
 		#Mensaje (Text Response automático de API.AI no se envía en Twitter ¿?)
-		$outputtext = 'Hecho, hemos registrado tu pedido con número ' . $npedido .'. Llegará el ' . $FECHA_ENTREGA . '. Puedes consultarnos su estado cuando quieras. ¡Gracias!';
+		$outputtext = 'Hecho, hemos registrado tu pedido con número ' . $nPedido .'. Llegará el ' . $FECHA_ENTREGA . '. Puedes consultarnos su estado cuando quieras. ¡Gracias!';
         break;
 		
 	#-------- CONSULTAR PEDIDOS------------ Redacta breve resumen de los pedidos pendientes				
