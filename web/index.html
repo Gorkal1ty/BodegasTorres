@@ -12,67 +12,68 @@
 	
 	<!-- Estilos Añadidos gbarron -->
 	<style media="screen" type="text/css">
-		.body 
-		{
-		margin: 0;
-		padding: 0;
-		text-align: center; /* !!! */
+		.exterior {
+			float: right;
+			right: 50%;
+			position: relative;
 		}
-
-		.centered 
-		{
-			margin: 0 auto;
-			text-align: left;
-			width: 800px;
+		.interior {
+			float: right;
+			right: -50%;
+			position: relative;
+		}
+		.clear {
+			clear: both;
 		}
 	</style>
   </head>
+  <body class="exterior">
+	<div class="interior">
+		<div>
+			<img align="middle" src="img/cabecera.png">
+		</div>	
+		<!--<h1 style="text-align: center;">Bodegas Torres</h1>-->
+		<h2><img src="img/logo_pequeño.png" height="40" width="40">  Stocks</h2>
+		<div id='table-container-stock'></div>
+		<h2><img src="img/logo_pequeño.png" height="40" width="40">  Pedidos</h2>
+		<div id='table-container-pedidos'></div>
 
-  <body>
-    <div>
-		<img align="middle" src="img/cabecera.png">
-	</div>	
-	<!--<h1 style="text-align: center;">Bodegas Torres</h1>-->
-	<h2><img src="img/logo_pequeño.png" height="40" width="40">  Stocks</h2>
-    <div id='table-container-stock'></div>
-	<h2><img src="img/logo_pequeño.png" height="40" width="40">  Pedidos</h2>
-	<div id='table-container-pedidos'></div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.csv.min.js"></script>
-    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="js/dataTables.bootstrap.js"></script>
-    <script type="text/javascript" src="js/csv_to_html_table.js"></script>
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/jquery.csv.min.js"></script>
+		<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="js/dataTables.bootstrap.js"></script>
+		<script type="text/javascript" src="js/csv_to_html_table.js"></script>
 
 
-    <script type="text/javascript">
-      function format_link(link){
-        if (link)
-          return "<a href='" + link + "' target='_blank'>" + link + "</a>";
-        else
-          return "";
-      }
+		<script type="text/javascript">
+		  function format_link(link){
+			if (link)
+			  return "<a href='" + link + "' target='_blank'>" + link + "</a>";
+			else
+			  return "";
+		  }
 
-      CsvToHtmlTable.init({
-        csv_path: 'bd/stock.csv',
-        element: 'table-container-stock', 
-        allow_download: true,
-        csv_options: {separator: ',', delimiter: '"'},
-        datatables_options: {"paging": false}
-      });
-	  
-	  CsvToHtmlTable.init({
-        csv_path: 'bd/pedidos.csv',
-        element: 'table-container-pedidos', 
-        allow_download: true,
-        csv_options: {separator: ',', delimiter: '"'},
-        datatables_options: {"paging": false}//,
-        //custom_formatting: [[4, format_link]]
-      });
-    </script>
+		  CsvToHtmlTable.init({
+			csv_path: 'bd/stock.csv',
+			element: 'table-container-stock', 
+			allow_download: true,
+			csv_options: {separator: ',', delimiter: '"'},
+			datatables_options: {"paging": false}
+		  });
+		  
+		  CsvToHtmlTable.init({
+			csv_path: 'bd/pedidos.csv',
+			element: 'table-container-pedidos', 
+			allow_download: true,
+			csv_options: {separator: ',', delimiter: '"'},
+			datatables_options: {"paging": false}//,
+			//custom_formatting: [[4, format_link]]
+		  });
+		</script>
+	</div>
   </body>
 </html>
