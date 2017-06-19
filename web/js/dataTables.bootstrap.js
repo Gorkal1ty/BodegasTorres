@@ -121,10 +121,10 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 		}
 	};
 
-	attach(
+	/*attach(
 		$(host).empty().html('<ul class="pagination"/>').children('ul'),
 		buttons
-	);
+	);*/
 };
 
 
