@@ -197,8 +197,8 @@ switch ($action)
 			}
 		}
 		
-		#Referencia
-		$nPedido = (string)intval(rand(0,1) . rand(1,9) . rand(0,2) . rand(1,9) . rand(0,9));
+		#Generar Referencia
+		$nPedido = '#' . (string)intval(rand(1,3) . rand(1,9) . rand(0,2) . rand(1,9) . rand(0,9));
 		
 		#Actualizar Array Pedidos
 		$arrayPedidos[] = new Pedido($nPedido, $USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA, 'EN PREPARACION');
@@ -211,7 +211,7 @@ switch ($action)
 		mostrarCSV();
 		
 		#Mensaje (Text Response automático de API.AI no se envía en Twitter ¿?)
-		$outputtext = 'Hecho, hemos registrado tu pedido. Llegará el ' . $FECHA_ENTREGA . '. Puedes consultarnos su estado cuando quieras. ¡Gracias!';
+		$outputtext = 'Hecho, hemos registrado tu pedido con número ' . $npedido .'. Llegará el ' . $FECHA_ENTREGA . '. Puedes consultarnos su estado cuando quieras. ¡Gracias!';
         break;
 		
 	#-------- CONSULTAR PEDIDOS------------ Redacta breve resumen de los pedidos pendientes				

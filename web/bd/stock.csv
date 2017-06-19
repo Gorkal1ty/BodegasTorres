@@ -1,9 +1,9 @@
 NOMBRE,TIPO,PRECIO (€),STOCK
-Celeste,Tinto,15.5,20
-Viña Esmeralda,Rosado,8.0,30
-Gran Coronas,Tinto,15.5,30
+Celeste,Tinto,15.5,100
+Viña Esmeralda,Rosado,8.0,60
+Gran Coronas,Tinto,15.5,80
 Mas La Plana,Tinto,80.0,5
-Altos Ibericos,Tinto,6.0,30
+Altos Ibericos,Tinto,6.0,40
 Gran Viña Sol,Blanco,12.5,20
 Milmanda,Blanco,55.0,10
-Sangre de Toro,Tinto,6.5,30
+Sangre de Toro,Tinto,6.5,50
