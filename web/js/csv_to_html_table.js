@@ -47,7 +47,6 @@ CsvToHtmlTable = {
             $('#' + el + '-table tbody').append(row_html);
           }
 
-          //gbarron -> Borrada línea de control de páginas
 		  $('#' + el + '-table').DataTable(datatables_options);
 
           if (allow_download)
