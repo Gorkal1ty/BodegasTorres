@@ -158,7 +158,7 @@ switch ($action)
 		#Parametros
 		$vino = $parameters['vino'];
 		$nbotellas = $parameters['nbotellas'];
-		$coste = obtenerPrecio($completar, 'Gran Coronas', $arrayStock);
+		$coste = obtenerPrecio($nbotellas, 'Gran Coronas', $arrayStock);
 		$outputtext = 'Perfecto, entonces serán ' . $nbotellas . ' botellas de Gran Coronas y tu precio queda en ' . $coste . '€. ¿Todo bien?';
 		$contextout = array(array('name'=>'confirmacionPedido', 'lifespan'=>2, 'parameters'=>array('vino'=>$vino, 'nBotellas'=>$nbotellas, 'completar' => 0, 'coste' => $coste)));
 		break;
