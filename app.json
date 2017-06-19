@@ -1,7 +1,7 @@
 {
   "name": "Bodegas Torres Chatbot Webhook",
   "description": "Servicio Web para Chatbot piloto de Bodegas Torres",
-  "repository": "https://github.com/Gorkal1ty/BodegaTorres",
+  "repository": "https://github.com/Gorkal1ty/BodegasTorres",
   "logo": "http://xvir.github.io/img/apiai.png",
   "keywords": ["api.ai", "torres"]
 }
