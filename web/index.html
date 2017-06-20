@@ -40,7 +40,7 @@
 		<!--<h1 style="text-align: center;">Bodegas Torres</h1>-->
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Stocks</h2>
 		<div id='table-container-stock'></div>
-		<a href='#' onclick='resetStock();'>RESET</a><br/>
+		<input type="button" value="RESET" onclick="resetStock()">
 		<br/>
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Pedidos</h2>
 		<div id='table-container-pedidos'></div>
@@ -65,17 +65,13 @@
 		  }
 		  
 		  function resetStock(){
-				var data, filename;
-				
-				filename = 'bd/stock.csv';
-				data = 'HOLA,TIPO,PRECIO (€),STOCK\nCeleste,Tinto,15.5,100\nViña Esmeralda,Rosado,8.0,60\nGran Coronas,Tinto,15.5,80\nMas La Plana,Tinto,80.0,5\nAltos Ibericos,Tinto,6.0,40\nGran Viña Sol,Blanco,12.5,20\nMilmanda,Blanco,55.0,10\nSangre de Toro,Tinto,6.5,50';
-				
-				if (!csv.match(/^data:text\/csv/i)) {
-					csv = 'data:text/csv;charset=utf-8,' + csv;
-				}
-				data = encodeURI(csv);
-			}
-
+			  var fso = new ActiveXObject("Scripting.FileSystemObject");
+			  var fileLoc = 'bd/stock.csv';
+			  var file = fso.CreateTextFile(fileLoc, true);
+			  file.writeline('NOMBRE,TIPO,PRECIO (€),STOCK' +
+								'Celeste,Tinto,15.5,100');
+			  file.Close();
+		  }
 
 		  CsvToHtmlTable.init({
 			csv_path: 'bd/stock.csv',
@@ -97,30 +93,5 @@
 		<br/><br/><br/>
 		<img class="img_centrada" src="images/logo.jpg" width="180">
 	</div>
-	
-
-	<?php
-		function resetCSV()
-		{
-			$list = array
-			(
-			"Peter,Griffin,Oslo,Norway",
-			"Glenn,Quagmire,Oslo,Norway",
-			);
-
-			$file = fopen("bd/stock.csv","w");
-
-			foreach ($list as $line)
-			  {
-			  fputcsv($file,explode(',',$line));
-			  }
-
-			fclose($file); 
-		}
-		if(array_key_exists('reset',$_POST)){
-		   resetCSV();
-		}
-	?>
-
-  </body>
+	</body>
 </html>
