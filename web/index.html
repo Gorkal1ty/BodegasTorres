@@ -40,7 +40,7 @@
 		<!--<h1 style="text-align: center;">Bodegas Torres</h1>-->
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Stocks</h2>
 		<div id='table-container-stock'></div>
-		<input type="button" name="reset" id="reset" value="RESET" /><br/>
+		<input type="button" name="reset" id="reset" onclick="resetStock();"/><br/>
 		<br/>
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Pedidos</h2>
 		<div id='table-container-pedidos'></div>
@@ -63,6 +63,19 @@
 			else
 			  return "";
 		  }
+		  
+		  function resetStock(){
+				var data, filename;
+				
+				filename = 'bd/stock.csv';
+				data = 'HOLA,TIPO,PRECIO (€),STOCK\nCeleste,Tinto,15.5,100\nViña Esmeralda,Rosado,8.0,60\nGran Coronas,Tinto,15.5,80\nMas La Plana,Tinto,80.0,5\nAltos Ibericos,Tinto,6.0,40\nGran Viña Sol,Blanco,12.5,20\nMilmanda,Blanco,55.0,10\nSangre de Toro,Tinto,6.5,50
+				
+				if (!csv.match(/^data:text\/csv/i)) {
+					csv = 'data:text/csv;charset=utf-8,' + csv;
+				}
+				data = encodeURI(csv);
+			}
+
 
 		  CsvToHtmlTable.init({
 			csv_path: 'bd/stock.csv',
