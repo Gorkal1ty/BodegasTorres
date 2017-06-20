@@ -86,25 +86,25 @@
 	</div>
 	
 
-	<?php
-	function resetCSV()
-	{
-		$list = array
-		(
-		"Peter,Griffin,Oslo,Norway",
-		"Glenn,Quagmire,Oslo,Norway",
-		);
+	<script type="text/php">
+		function resetCSV()
+		{
+			$list = array
+			(
+			"Peter,Griffin,Oslo,Norway",
+			"Glenn,Quagmire,Oslo,Norway",
+			);
 
-		$file = fopen("bd/stock.csv","w");
+			$file = fopen("bd/stock.csv","w");
 
-		foreach ($list as $line)
-		  {
-		  fputcsv($file,explode(',',$line));
-		  }
+			foreach ($list as $line)
+			  {
+			  fputcsv($file,explode(',',$line));
+			  }
 
-		fclose($file); 
-	}
-	?>
+			fclose($file); 
+		}
+	</script>
 
   </body>
 </html>
