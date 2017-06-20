@@ -40,6 +40,7 @@
 		<!--<h1 style="text-align: center;">Bodegas Torres</h1>-->
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Stocks</h2>
 		<div id='table-container-stock'></div>
+		<input id="clickMe" type="button" value="clickme" onclick="resetCSV();" />
 		<br/>
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Pedidos</h2>
 		<div id='table-container-pedidos'></div>
@@ -86,13 +87,15 @@
 	
 
 	<?php
+	function resetCSV()
+	{
 		$list = array
 		(
 		"Peter,Griffin,Oslo,Norway",
 		"Glenn,Quagmire,Oslo,Norway",
 		);
 
-		$file = fopen("bd/prueba.csv","w");
+		$file = fopen("bd/stock.csv","w");
 
 		foreach ($list as $line)
 		  {
@@ -100,6 +103,7 @@
 		  }
 
 		fclose($file); 
+	}
 	?>
 
   </body>
