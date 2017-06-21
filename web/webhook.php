@@ -250,7 +250,7 @@ switch ($action)
 		error_log('ACCION = CONSULTAR CATALOGO');
 		#Listar Vinos
 		error_log('-------CATALOGO----------');
-		foreach ($arrayStock as $Stock)
+		foreach ($arrayStock as &$Stock)
 		{
 			error_log($Stock->nombre);
 			if($Stock->stock>0)
