@@ -80,7 +80,7 @@ $parameters = $request['result']['parameters'];
 #Obtener CSV Stock
 if (($fichero = fopen($BDstock, 'r')) !== FALSE) 
 {
-	while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
+	while (($data = fgetcsv($fichero, 5000, ',')) !== FALSE) 
 	{
 		$arrayStock[] = new Stock($data[0], $data[1], $data[2], $data[3]);
 	}
@@ -89,7 +89,7 @@ if (($fichero = fopen($BDstock, 'r')) !== FALSE)
 #Obtener CSV Pedidos
 if (($fichero = fopen($BDpedidos, 'r')) !== FALSE) 
 {
-	while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
+	while (($data = fgetcsv($fichero, 5000, ',')) !== FALSE) 
 	{
 		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
 	}
