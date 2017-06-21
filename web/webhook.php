@@ -253,13 +253,13 @@ switch ($action)
 		{
 			if($Stock->stock>0)
 			{
-				$infoCatalogo .= $Stock->nombre . '(' . $Stock->tipo . ') = ' . $Stock->precio . '€    ||    ';  #SALTO LINEA?!?!?!?!?!
+				$infoCatalogo .= $Stock->nombre . ' (' . $Stock->tipo . ') = ' . $Stock->precio . '€    ||    ';  #SALTO LINEA?!?!?!?!?!
 			}
 		}
 		#Mostrar
 		$outputtext = 'Éste es tu catálogo: ';
 		$outputtext .= $infoCatalogo;
-		$outputtext .= '    ||    Más info. en http://shop.torres.es/es/vinos';
+		$outputtext .= 'Más info. en http://shop.torres.es/es/vinos';
 		break;
 		
 	#-------- RESETEAR TABLAS ------------ Hace un reset de las tablas a su estado inicial >> Actualizar manualmente según cambios en GIT
