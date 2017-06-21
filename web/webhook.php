@@ -249,7 +249,7 @@ switch ($action)
 	case 'consulta.Catalogo':
 		error_log('ACCION = CONSULTAR CATALOGO');
 		#Listar Vinos
-		error_log("-------CATALOGO"----------);
+		error_log('-------CATALOGO----------');
 		foreach ($arrayStock as $Stock)
 		{
 			error_log($Stock->nombre);
