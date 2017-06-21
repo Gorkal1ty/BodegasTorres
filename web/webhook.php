@@ -181,7 +181,7 @@ switch ($action)
 		}
 		
 		#Actualizar Array Stock
-		foreach ($arrayStock as $Stock)
+		foreach ($arrayStock as &$Stock)
 		{
 			if($Stock->nombre==$vino)
 			{
@@ -224,7 +224,7 @@ switch ($action)
         error_log('ACCION = CONSULTAR PEDIDOS');
 		#Listar Pedidos
 		$contPedidos=0;
-		foreach ($arrayPedidos as $Pedido)
+		foreach ($arrayPedidos as &$Pedido)
 		{
 			if($Pedido->usuario==$USUARIO and $Pedido->estado!='ENTREGADO')
 			{
