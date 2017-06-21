@@ -40,18 +40,8 @@
 		<!--<h1 style="text-align: center;">Bodegas Torres</h1>-->
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Stocks</h2>
 		<div id='table-container-stock'></div>
+		<!-- pruebas reset gbarron -->
 		<!-- <input type="button" value="RESET" onclick="resetStock();"> -->
-		<form action="js/getCSV.php" method ="post" > 
-			<input type="hidden" name="csv_text" id="csv_text">
-			<input type="submit" value="Get CSV File" 
-			   onclick="getCSVData()"
-		</form>
-		<script>
-			function getCSVData(){
-			  var csv_value='NOMBRE,TIPO,PRECIO (€),STOCK';
-			  $("#csv_text").val(csv_value);  
-			}
-		</script>
 		<br/>
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Pedidos</h2>
 		<div id='table-container-pedidos'></div>
