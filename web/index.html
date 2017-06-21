@@ -40,8 +40,6 @@
 		<!--<h1 style="text-align: center;">Bodegas Torres</h1>-->
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Stocks</h2>
 		<div id='table-container-stock'></div>
-		<!-- pruebas reset gbarron -->
-		<!-- <input type="button" value="RESET" onclick="resetStock();"> -->
 		<br/>
 		<h2><img src="images/logo_pequeño.png" height="40" width="45">  Pedidos</h2>
 		<div id='table-container-pedidos'></div>
@@ -64,16 +62,6 @@
 			else
 			  return "";
 		  }
-		  
-		  <!-- PRUEBAS gbarron -->
-		  <!-- function resetStock(){ -->
-			  <!-- var fso = new ActiveXObject("Scripting.FileSystemObject"); -->
-			  <!-- var fileLoc = 'bd/stock.csv'; -->
-			  <!-- var file = fso.CreateTextFile(fileLoc, true); -->
-			  <!-- file.writeline('NOMBRE,TIPO,PRECIO (€),STOCK'); -->
-			  <!-- file.Close(); -->
-			  <!-- alert('File created successfully at location: ' + fileLoc); -->
-		  <!-- } -->
 
 		  CsvToHtmlTable.init({
 			csv_path: 'bd/stock.csv',
