@@ -290,13 +290,13 @@ switch ($action)
 			$fichero = fopen("bd/pedidos.csv","w");
 
 			foreach ($pedidos as $fila)
-			  {
-			  fputcsv($fichero,explode(',',$fila));
-			  }
+			{
+				fputcsv($fichero,explode(',',$fila));
+			}
 
 			fclose($fichero);
 		}
-		} catch (Exception $e) 
+		catch (Exception $e) 
 		{
 			$outputtext = 'Ha ocurrido algún error.';
 			error_log('ERROR: ' $e->getMessage());
