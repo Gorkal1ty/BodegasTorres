@@ -53,7 +53,7 @@ class Pedido
 	public $usuario;
 	public $vino;
 	public $unidades;
-	public $completado;			#VARIABLE DEMO (GRAN CORONAS)
+	#public $completado;			#VARIABLE DEMO (GRAN CORONAS)
 	public $coste;
 	public $fecha_entrega;
 	public $estado;
@@ -64,7 +64,7 @@ class Pedido
         $this->usuario = $u;
 		$this->vino = $v;
 		$this->unidades = $uni;
-		$this->completado = $comp;
+		#$this->completado = $comp;
 		$this->coste = $cost;
 		$this->fecha_entrega = $f;
 		$this->estado = $e;
@@ -91,7 +91,7 @@ if (($fichero = fopen($BDpedidos, 'r')) !== FALSE)
 {
 	while (($data = fgetcsv($fichero, 1000, ',')) !== FALSE) 
 	{
-		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
+		$arrayPedidos[] = new Pedido($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
 	}
 	fclose($fichero);
 }
@@ -200,7 +200,13 @@ switch ($action)
 		$nPedido = '#' . (string)intval(rand(1,3) . rand(1,9) . rand(0,2) . rand(1,9) . rand(0,9));
 		
 		#Actualizar Array Pedidos
-		$arrayPedidos[] = new Pedido($nPedido, $USUARIO, $vino, $nbotellas, $completar, $coste, $FECHA_ENTREGA, 'EN PREPARACION');
+		$arrayPedidos[] = new Pedido($nPedido, $USUARIO, $vino, $nbotellas, obtenerPrecio($nbotellas, $vino, $arrayStock), $FECHA_ENTREGA, 'EN PREPARACION');
+		
+		#Caso Pedido Completado --> Generar otro pedido de Gran Coronas con la misma referencia (DEMO)
+		if($completar>0)
+		{
+			$arrayPedidos[] = new Pedido($nPedido, $USUARIO, 'Gran Coronas', $completar, obtenerPrecio($completar, 'Gran Coronas', $arrayStock), $FECHA_ENTREGA, 'EN PREPARACION');
+		}
 		
 		#Actualizar CSVs
 		actualizarStock($arrayStock);
