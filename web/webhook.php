@@ -265,44 +265,37 @@ switch ($action)
 	#-------- RESETEAR TABLAS ------------ Hace un reset de las tablas a su estado inicial >> Actualizar manualmente según cambios en GIT
 	case 'comando.reset':
 		error_log('ACCION = RESET');
-		try 
-		{
-			$pedidos = array
-			(
-			'Nº PEDIDO,USUARIO,VINO,UNIDADES,COSTE (€),FECHA,ESTADO',
-			'#05251,NTS1,Celeste,6,90.0,15/06/2017,ENTREGADO',
-			'#06193,NTS2,Viña Esmeralda,6,50.5,26/06/2017,EN CAMINO',
-			);
-			
-			$stock = array
-			(
-			'NOMBRE,TIPO,PRECIO (€),STOCK',
-			'Celeste,Tinto,15.5,100',
-			'Viña Esmeralda,Rosado,8.0,60',
-			'Gran Coronas,Tinto,15.5,80',
-			'Mas La Plana,Tinto,80.0,5',
-			'Altos Ibericos,Tinto,6.0,40',
-			'Gran Viña Sol,Blanco,12.5,20',
-			'Milmanda,Blanco,55.0,10',
-			'Sangre de Toro,Tinto,6.5,50',
-			);
 
-			$fichero = fopen("bd/pedidos.csv","w");
-
-			foreach ($pedidos as $fila)
-			{
-				fputcsv($fichero,explode(',',$fila));
-			}
-
-			fclose($fichero);
-		}
-		catch (Exception $e) 
-		{
-			$outputtext = 'Ha ocurrido algún error.';
-			error_log('ERROR: ' $e->getMessage());
-		}
+		$pedidos = array
+		(
+		'Nº PEDIDO,USUARIO,VINO,UNIDADES,COSTE (€),FECHA,ESTADO',
+		'#05251,NTS1,Celeste,6,90.0,15/06/2017,ENTREGADO',
+		'#06193,NTS2,Viña Esmeralda,6,50.5,26/06/2017,EN CAMINO',
+		);
 		
-}
+		$stock = array
+		(
+		'NOMBRE,TIPO,PRECIO (€),STOCK',
+		'Celeste,Tinto,15.5,100',
+		'Viña Esmeralda,Rosado,8.0,60',
+		'Gran Coronas,Tinto,15.5,80',
+		'Mas La Plana,Tinto,80.0,5',
+		'Altos Ibericos,Tinto,6.0,40',
+		'Gran Viña Sol,Blanco,12.5,20',
+		'Milmanda,Blanco,55.0,10',
+		'Sangre de Toro,Tinto,6.5,50',
+		);
+
+		#Actualizar Tabla
+		$fichero = fopen("bd/pedidos.csv","w");
+
+		foreach ($pedidos as $fila)
+		{
+			fputcsv($fichero,explode(',',$fila));
+		}
+
+		fclose($fichero);
+
 		$outputtext = 'Tablas reseteadas correctamente.';
 		#LOG
 		mostrarCSV();
