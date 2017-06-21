@@ -121,7 +121,7 @@ switch ($action)
 		if($stock<=0)
 		{
 			#STOCK VACIO > Proponer Sustituir por Gran Coronas
-			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . ', Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas y tu precio sería de ' . obtenerPrecio($nbotellas, 'Gran Coronas', $arrayStock) . '€. ¿Las quieres?';
+			$outputtext = 'Lo sentimos pero no nos quedan existencias de ' . $vino . '. Le recomendamos un vino similar como es el Gran Coronas. Disponemos de las ' . $nbotellas . ' botellas y tu precio sería de ' . obtenerPrecio($nbotellas, 'Gran Coronas', $arrayStock) . '€. ¿Las quieres?';
 			$contextout = array(array('name'=>'consultarCambio', 'lifespan'=>2, 'parameters'=>array('vino'=>'Gran Coronas', 'nBotellas'=>$nbotellas)));
 		}
 		else if ($stock<$nbotellas) 
@@ -242,7 +242,6 @@ switch ($action)
 		{
 			$outputtext = 'No parece que tengas ningún pedido pendiente. Si no has recibido un envío, por favor ponte en contacto con nosotros en ...';
 		}
-
 		break;
 		
 	#-------- CONSULTAR CATALOGO------------ Redacta breve resumen de los vinos con su tipo y precio	
