@@ -5,10 +5,6 @@ ob_start();
 #Constantes
 $BDstock = 'bd/stock.csv';
 $BDpedidos = 'bd/pedidos.csv';
-
-date_default_timezone_set('Africa/Nairobi');
-
-$date = 
 $FECHA_ENTREGA = date('d/m/Y',strtotime("+7 day"));			#Fecha estimada de entrega (+7 días)
 $USUARIO = 'NTS';
 
@@ -268,8 +264,8 @@ $output['displayText'] = $outputtext;
 $output['contextOut'] = $contextout;
 $output['source'] = $source;
 $output['followupEvent'] = $followupEvent;
-echo json_encode($output);
 ob_end_clean();
+
 echo json_encode($output);
 
 
