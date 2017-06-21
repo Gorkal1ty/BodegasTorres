@@ -58,14 +58,14 @@ class Pedido
 	public $fecha_entrega;
 	public $estado;
 	
-	public function __construct($n, $u, $v, $uni, $comp, $cost, $f, $e)
+	public function __construct($n, $u, $v, $uni, $c, $f, $e)
 	{
 		$this->npedido = $n;
         $this->usuario = $u;
 		$this->vino = $v;
 		$this->unidades = $uni;
 		#$this->completado = $comp;
-		$this->coste = $cost;
+		$this->coste = $c;
 		$this->fecha_entrega = $f;
 		$this->estado = $e;
     }
