@@ -243,7 +243,7 @@ switch ($action)
 			$outputtext = 'No parece que tengas ningún pedido pendiente. Si no has recibido un envío, por favor ponte en contacto con nosotros en ...';
 		}
 		break;
-		
+				
 	#-------- CONSULTAR CATALOGO------------ Redacta breve resumen de los vinos con su tipo y precio	
 	case 'consulta.Catalogo':
 		error_log('ACCION = CONSULTAR CATALOGO');
@@ -287,7 +287,7 @@ switch ($action)
 		'Sangre de Toro,Tinto,6.5,50',
 		);
 
-		#Actualizar Tabla
+		#Actualizar Tabla Pedidos
 		$fichero = fopen("bd/pedidos.csv","w");
 
 		foreach ($pedidos as $fila)
@@ -296,6 +296,14 @@ switch ($action)
 		}
 
 		fclose($fichero);
+		
+		#Actualizar Tabla Stock
+		$fichero = fopen("bd/stock.csv","w");
+
+		foreach ($stock as $fila)
+		{
+			fputcsv($fichero,explode(',',$fila));
+		}
 
 		$outputtext = 'Tablas reseteadas correctamente.';
 		#LOG
